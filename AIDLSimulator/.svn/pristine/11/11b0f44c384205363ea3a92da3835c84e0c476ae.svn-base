@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- Meta tags describing webpage, identifying keywords, listing author, and defining charset-->
+	<meta name = "description" content="Preview"> 
+	<meta name = "keywords" content = "Preview">
+	<meta name = "author" content = "Aditya Junnarkar">
+	<!-- Import bootstrap meta characteristics to allow webpage to be responsive on mobile/tablet platforms-->
+	<meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+	<meta charset = "UTF-8">
+	<!-- Import hosted jQuery library-->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<!-- Use local script - startup_interaction.js-->
+	<script src = "js/startup_interaction.js"></script>
+<title>Preview</title>
+
+</head>
+<body>
+PREVIEW
+<div><button id="next" type="button" class="btn sim_btn btn-warning">NEXT</button></div>
+
+</body>
+</html>

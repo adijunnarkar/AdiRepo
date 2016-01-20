@@ -1,0 +1,528 @@
+
+
+  	.header{
+  		font-weight: bold;
+  		text-align: center;
+	}
+  	
+  	.navbar{
+  		margin-bottom: 0px;
+  		min-height: 30px;
+	}	
+	  
+  	ul{
+  		list-style-type: none;
+  		padding: 0px;
+  		margin-top: 8px;
+  	}
+  
+  	li a{
+  		text-decoration: none;
+  		background-color: lightgray;
+  		color: black;
+  		display: block;
+  		width: 100%;
+  		text-align: left;
+  		cursor: pointer;
+  		border: 1px solid gray;
+	}	
+  
+    li a:hover{
+  	
+  		background-color: lightblue;
+  		color: black;
+		border: 1px solid blue;
+  		cursor: pointer;
+  		text-decoration: none;
+  	}	
+  	
+  	.panel_container{
+		border: 3px solid black;
+		/*height: 670px;*/
+		height: 550px;
+		-webkit-box-shadow: 5px 5px 14px 0px rgba(50, 50, 50, 0.58);
+		-moz-box-shadow:    5px 5px 14px 0px rgba(50, 50, 50, 0.58);
+		box-shadow:         5px 5px 14px 0px rgba(50, 50, 50, 0.58);
+	}		
+  	
+  	.inner_container{
+  		border: 2px solid black;
+  		margin: 10px 0px;
+		cursor: auto;
+		vertical-align: top;
+		-webkit-box-shadow: 5px 6px 8px 0px rgba(50, 50, 50, 0.75);
+		-moz-box-shadow:    5px 6px 8px 0px rgba(50, 50, 50, 0.75);
+		box-shadow:         5px 6px 8px 0px rgba(50, 50, 50, 0.75);
+		text-align: center;
+		display: inline-block;
+		font-weight: normal;
+		/*vertical-align: middle;*/
+		white-space: nowrap;
+		padding: 6px 12px;
+		font-size: 14px;
+		line-height: 1.42857143;
+		border-radius: 4px;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+
+	}
+  	
+  	#tif_container_auto {
+  		margin-left: 20px;
+
+  	}
+  	
+  	.btncontainer{
+	 	margin-left: 70px;
+   		width: 70%;
+   		vertical-align: top;
+   		margin-top: 18px;
+   
+   	}
+   
+  	.sim_btn{
+		width: 100%;
+		height: 70px;
+		font-size: 18px;
+		margin-bottom:55px;
+		background-color: #6633CC;
+		color: white !important;
+  	}
+  
+ 	.sim_btn:hover {
+		background-color: #6633FF;
+		color: white;
+	}
+	
+	#file_db_exp_container{
+		margin-bottom: 55px;
+		background-color: #6633cc; 
+		font-size: 18px;
+		color: white;
+		padding: 6px 12px;
+		border-radius: 4px;
+	
+	}
+  
+ 	#formcontainer{
+  		width: 450px;
+  		background-color: #6230Ac;
+  		border: 2px solid white;
+  		color: white;
+		padding: 10px;
+  		border-radius: 5px;
+  		position: relative;
+  		top: 200px;
+
+	}
+  		
+  		
+ 	#timestep, #title{
+		padding: 20px;
+		background-color: #C8C8C8/*#A0A0A0*/;
+		border: 12px solid #032487;
+		text-align: center;
+		font-size: 16px;
+	}		
+
+	#session_control, #prog_container, #error_container, #debug_container{
+		text-align: center;
+		padding-top: 20px;
+		background-color: #C8C8C8/*#A0A0A0*/;
+		border: 12px solid #032487;
+		font-size: 16px;
+		height: 990px;
+	}
+
+	#prog_logs, #error_logs, #debug_logs{
+		list-style-type: none;
+		margin-top: 18px;
+		overflow-y: auto;
+		height: 900px;
+		padding-left: 40px;
+		padding-right: 20px;
+		margin-right: 20px;
+		
+	}
+		
+	#prog_logs li, #error_logs li, #debug_logs li{
+		background-color: #E8E8E8;
+		margin-bottom: 15px;
+		width: 100%;
+		
+	}	
+		
+
+	#prog_bar{
+		-webkit-box-shadow: 5px 5px 14px 0px rgba(50, 50, 50, 0.58);
+		-moz-box-shadow:    5px 5px 14px 0px rgba(50, 50, 50, 0.58);
+		box-shadow:         5px 5px 14px 0px rgba(50, 50, 50, 0.58);
+	
+	}
+	
+	#prog_bar + .caption { 
+		width: 75%;
+ 		text-align: center;
+ 		position: relative;
+ 		bottom: 35px;
+ 	}
+	 
+	#qty_chart{
+		/*height: 320px; */
+		width: 40%;
+		float: left;
+		height: 280px;
+	}
+	
+	#asset_allocation_piechart{
+		width: 100%;
+		float: left;
+		height: 290px;
+	
+	}
+	#inv_chart{
+		/*height: 320px; */
+		height: 280px;
+		width: 60%;
+		float: left;
+		height: 320px;
+	}
+	
+	
+	#inv_chart .jqplot-title, #qty_chart .jqplot-title{
+		font-size: 16px;
+	}
+
+	#product_list li, #quantity_list li, #curr_closeprice_list li, #test1 li, #test2 li{
+		border: 2px solid black;
+		padding: 3px;
+		border-top-width: 0px;	
+		font-size: 17px;
+		height: 48px;
+		color: white;
+		background-color: 	#9D9DA2;
+		text-align: center;
+		font-size: 15px;
+	}
+	
+	#product_list li+li , #quantity_list li+li, #curr_closeprice_list li+li, #test1 li+li, #test2 li+li{
+		height: 30px;
+	}
+	
+	#product_list li, #quantity_list li, #curr_closeprice_list li, #test1 li, #test2 li{
+		border-left-width: 0px;
+	
+	}
+	
+	#product_list li:first-child, #quantity_list li:first-child,  #curr_closeprice_list li:first-child, #test1 li:first-child, #test2 li:first-child{
+		border-top-width: 2px;
+		color: white;
+		background-color: blue;
+	}
+	
+	#product_list li{
+		border-left-width: 2px;
+	}
+	
+	#product_list li:nth-child(even), #quantity_list li:nth-child(even), #curr_closeprice_list li:nth-child(even), #test1 li:nth-child(even), #test2 li:nth-child(even){
+		background-color: gray;
+	
+	}
+	
+	.jqplot-point-label{
+		
+  /*	-webkit-transform: rotate(-90deg);
+		-moz-transform: rotate(-90deg);
+		-ms-transform: rotate(-90deg);
+		-o-transform: rotate(-90deg);
+		 transform: rotate(-90deg);
+
+		/* also accepts left, right, top, bottom coordinates; not required, but a good idea for styling */
+  		-webkit-transform-origin: 50% 50%;
+  		-moz-transform-origin: 50% 50%;
+		-ms-transform-origin: 50% 50%;
+  		-o-transform-origin: 50% 50%;
+  		transform-origin: 50% 50%;
+
+  		/* Should be unset in IE9+ I think. */
+  		filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);*/
+	}
+
+	#candlestick_chart, #line_chart{
+		height: 250px;
+		width: 80%;
+		margin: 20px 20px 20px 40px;
+	}
+
+	#prod_cont, #realtime_cont, #algo_cont, #events_cont{
+		border: 1px solid black;
+		height: 88%;
+		padding-top: 0px;
+		padding-bottom: 0px;
+	}	
+	
+	.trade_container{
+		/*margin: 20px 20px;*/
+		margin: 0px 20px 20px 20px;
+		height: 90%;	
+	}
+	
+	#manual, #automatic{
+		border: 2px solid black;
+		width: 455px;
+		height: 100%;
+		margin: 20px 20px;
+	}	
+	
+	.type_header{
+		border-bottom: 2px solid black; 
+		width: 100%; 
+	}
+
+	
+	#submit_state_change, #submit_order{
+		margin-top: 10px;
+		font-weight: bold;	
+	}
+
+	#trade_categ_select, #product_select_container{
+		width: 20%;
+	} 
+
+	#data_param_select{
+		width: 25%;
+	}
+	
+	#product_select_container{
+		margin-left: 125px;
+	}
+	
+/*	#product_select_manual, #product_select_auto/*, #man_select, #auto_select*//* {
+		height: 88px;
+		overflow-y : scroll;
+	}*/
+	
+	#product_select_manual, #product_select_auto{
+		display:none;
+	}	
+	
+.	selected{
+		background-color: lightblue;
+		border-color : blue;
+	}
+
+	#feedback_panel_manual, #feedback_panel_algocontrol{
+		width: 100%;
+		height: 145px;
+		background-color: #DCEFF7;
+	}
+
+	select{
+		/*-webkit-appearance: button;*/
+    	-moz-appearance: button;
+    	-webkit-user-select: none;
+    	-moz-user-select: none;
+    	-webkit-padding-end: 5px;
+    	-moz-padding-end: 5px;
+    	-webkit-padding-start: 2px;
+    	-moz-padding-start: 2px;
+    	background-color: lightgray; /* fallback color if gradients are not supported */
+   		/* background-image: url(../images/select-arrow.png), -webkit-linear-gradient(top, #E5E5E5, #F4F4F4); /* For Chrome and Safari */
+   		/* background-image: url(../images/select-arrow.png), -moz-linear-gradient(top, #E5E5E5, #F4F4F4); /* For old Fx (3.6 to 15) */
+   		/* background-image: url(../images/select-arrow.png), -ms-linear-gradient(top, #E5E5E5, #F4F4F4); /* For pre-releases of IE 10*/
+   		/* background-image: url(../images/select-arrow.png), -o-linear-gradient(top, #E5E5E5, #F4F4F4); /* For old Opera (11.1 to 12.0) */ 
+  		/*  background-image: url(../images/select-arrow.png), linear-gradient(to bottom, #E5E5E5, #F4F4F4); /* Standard syntax; must be last */
+  		/*  background-position: center right;
+   		/* background-repeat: no-repeat;*/
+    	border: 1px solid black;
+    	border-radius: 2px;
+    	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    	color: #555;
+    	font-size: inherit;
+    	margin: 0;
+    	overflow: hidden;
+    	padding-top: 2px;
+    	padding-bottom: 2px;
+    	text-overflow: ellipsis;
+    	white-space: nowrap;
+    	font-weight: bold;
+    	
+    }
+    
+    option{
+    	font-weight: bold;
+    }
+    
+    
+    #event_list_container{
+	/*	overflow-y : auto;*/
+		margin: 10px 10px;
+		height: 89%;		
+    }
+    
+    #price_input_manual, #iterations{
+    	border-radius: 3px;
+   		border: 1px solid black;
+   		padding: 3px 0px 3px 6px;
+   		margin: 2px;
+   		background-color: #E4E4E7
+    }
+    
+    #price_input_manual_container{
+    	width: 110px; 
+    	padding: 6px 0px 6px 0px;
+    	position: relative;
+    	left: 20px;
+    }
+    
+    
+    #transaction_panel{
+    	height:510px; 
+ 
+    }
+    
+  /* #algo_monitor, #algo_monitor td, #algo_monitor th{
+      /*border: 1px solid black;*/
+    	/*border-collapse: collapse;*/
+  /*  }
+    
+    #algo_monitor{
+		width: 95%;
+		/*height: 90%;*/
+		/*margin:10px 10px 10px 7px;*/
+		/*border-collapse: collapse;*/
+    	/*border-spacing :0px;*/
+/*		border-color: black;
+	}
+    	
+    	
+    #algo_monitor th{
+    	background-color: lightblue;
+    	color: black;
+    	height: 25px;
+    }	
+    
+   	#algo_monitor td, #algo_monitor th{
+   		padding: 5px;
+   		text-align: center;	
+	} 	
+	*/
+	
+	#automated_product_list li, #algorithm_list li, #iteration_list li ,#current_state_list li, #orders_completed_list li, #total_profit_loss_list li{
+		border: 2px solid black;
+		padding: 3px;
+		border-top-width: 0px;	
+		font-size: 17px;
+		height: 48px;
+		color: white;
+		background-color: 	#9D9DA2;
+		text-align: center;
+		font-size: 15px;
+	}
+	
+	#automated_product_list li+li ,  #algorithm_list li+li, #iteration_list li+li, #current_state_list li+li, #orders_completed_list li+li, #total_profit_loss_list li+li{
+		height: 30px;
+	}
+	
+	#automated_product_list li,  #algorithm_list li, #iteration_list li, #current_state_list li, #orders_completed_list li, #total_profit_loss_list li{
+		border-left-width: 0px;
+	
+	}
+	
+	#automated_product_list li:first-child,  #algorithm_list li:first-child, #iteration_list li:first-child, #current_state_list li:first-child,  #orders_completed_list li:first-child, #total_profit_loss_list li:first-child{
+		border-top-width: 2px;
+		color: white;
+		background-color: blue;
+	}
+	
+	#automated_product_list li{
+		border-left-width: 2px;
+	}
+	
+	#automated_product_list li:nth-child(even),  #algorithm_list li:nth-child(even), #iteration_list li:nth-child(even), #current_state_list li:nth-child(even), #orders_completed_list li:nth-child(even), #total_profit_loss_list li:nth-child(even){
+		background-color: #747480;
+	
+	}
+	
+	#eventtimestamp_list li, #eventproduct_list li, #eventname_list li, #eventdescription_list li{
+		border: 1px solid black;
+		padding: 3px;
+		border-top-width: 0px;	
+		font-size: 15px;
+		height: 48px;
+		background-color: #E0E0EB;
+		text-align: center;
+	}
+	
+	#eventproduct_list li, #eventname_list li, #eventdescription_list li{
+		border-left-width: 0px;
+	
+	}
+	
+	#eventproduct_list li:first-child, #eventtimestamp_list li:first-child, #eventname_list li:first-child, #eventdescription_list li:first-child{
+		border-top-width: 1px;
+		background-color: blue;
+		color: white;
+		
+	}
+
+	#eventproduct_list li:nth-child(even), #eventtimestamp_list li:nth-child(even), #eventname_list li:nth-child(even), #eventdescription_list li:nth-child(even){
+		background-color: grey;
+		color: white;	
+	}
+	
+	#eventtimestampheader_list li ,#eventlabelheader_list li,#eventproductheader_list li,#eventdescriptionheader_list li{
+		border: 1px solid black;
+		border-left-width: 0px;
+		padding: 3px;
+		font-size: 15px;
+		height: 48px;
+		background-color: blue;
+		color: white;
+		text-align: center;
+		}
+		
+	#eventtimestampheader_list li{
+		border-left-width: 1px;
+				
+	}
+	
+
+		
+	#eventtimestampheader_list  ,#eventlabelheader_list ,#eventproductheader_list, #eventdescriptionheader_list{
+		margin-bottom: 0px;
+		
+		}
+		
+	#eventtimestampcontent_list ,#eventlabelcontent_list ,#eventproductcontent_list, #eventdescriptioncontent_list {
+
+		 margin-top:0px;
+		
+		}
+		
+	#eventtimestampcontent_list li ,#eventlabelcontent_list li,#eventproductcontent_list li, #eventdescriptioncontent_list li{
+			height: 48px;
+			border: 1px solid black;
+			border-top-width:0px;
+			border-left-width:0px;
+			text-align: center;
+			font-size: 15px;
+			padding: 3px;
+		
+		}
+		
+	#eventtimestampcontent_list li{
+		border-left-width: 1px;
+				
+	}
+	#eventtimestampcontent_list li:nth-child(even) ,#eventlabelcontent_list li:nth-child(even) ,#eventproductcontent_list li:nth-child(even), 	#eventdescriptioncontent_list li:nth-child(even){
+			background-color: grey;
+			color: white;
+		
+		}
+
+	#eventtimestampcontent_list li:nth-child(odd) ,#eventlabelcontent_list li:nth-child(odd) ,#eventproductcontent_list li:nth-child(odd),	#eventdescriptioncontent_list li:nth-child(odd){
+			background-color: #E0E0EB;;	
+		
+		}

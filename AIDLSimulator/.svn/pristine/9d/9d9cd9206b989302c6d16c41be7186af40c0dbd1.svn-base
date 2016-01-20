@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<scenario xmlns:ns2="testscenario.Scenario">
+<scenarioDuration>60</scenarioDuration>
+<numOfEvents>10</numOfEvents>
+<numOfProducts>8</numOfProducts>
+<numOfAutomatedProducts>4</numOfAutomatedProducts>
+<timeWindowForQuotes>30</timeWindowForQuotes>
+<initialAccountBalance>10000.00</initialAccountBalance>
+  
+<initialShareQuantities>
+	<quantity>20</quantity>
+	<quantity>30</quantity>
+	<quantity>20</quantity>
+	<quantity>30</quantity>
+	<quantity>20</quantity>
+	<quantity>30</quantity>
+	<quantity>20</quantity>
+	<quantity>30</quantity>
+</initialShareQuantities>
+
+<productList>
+	<Product>
+		<ProductID>0</ProductID>
+		<sector>Technology</sector>
+		<isAutomated>0</isAutomated> 
+		<tickerSymbol>MSFT</tickerSymbol> 
+	</Product>
+	<Product>
+		<ProductID>1</ProductID>
+		<sector>Technology</sector>
+		<isAutomated>0</isAutomated> 
+		<tickerSymbol>GOOG</tickerSymbol> 
+	</Product>
+	<Product>
+		<ProductID>2</ProductID>
+		<sector>Technology</sector>
+		<isAutomated>1</isAutomated> 
+		<tickerSymbol>AAPL</tickerSymbol> 
+	</Product>
+	<Product>
+		<ProductID>3</ProductID>
+		<sector>Technology</sector>
+		<isAutomated>1</isAutomated> 
+		<tickerSymbol>IBM</tickerSymbol> 
+	</Product>
+	<Product>
+		<ProductID>4</ProductID>
+		<sector>Technology</sector>
+		<isAutomated>0</isAutomated> 
+		<tickerSymbol>BBRY</tickerSymbol> 
+	</Product>
+	<Product>
+		<ProductID>5</ProductID>
+		<sector>Technology</sector>
+		<isAutomated>0</isAutomated> 
+		<tickerSymbol>AXP</tickerSymbol> 
+	</Product>
+	<Product>
+		<ProductID>6</ProductID>
+		<sector>Technology</sector>
+		<isAutomated>1</isAutomated> 
+		<tickerSymbol>THI</tickerSymbol> 
+	</Product>
+	<Product>
+		<ProductID>7</ProductID>
+		<sector>Technology</sector>
+		<isAutomated>1</isAutomated> 
+		<tickerSymbol>TYO</tickerSymbol> 
+	</Product>
+</productList>
+  
+<marketDataByProduct>
+	<ProductMarketData>
+		<productID>0</productID>
+		<tickerSymbol>MSFT</tickerSymbol>
+	</ProductMarketData>
+	<ProductMarketData>
+		<productID>1</productID>
+		<tickerSymbol>GOOG</tickerSymbol>
+	</ProductMarketData>
+	<ProductMarketData>
+		<productID>2</productID>
+		<tickerSymbol>AAPL</tickerSymbol>
+	</ProductMarketData>
+	<ProductMarketData>
+		<productID>3</productID>
+		<tickerSymbol>IBM</tickerSymbol>
+	</ProductMarketData>
+		<ProductMarketData>
+		<productID>4</productID>
+		<tickerSymbol>BBRY</tickerSymbol>
+	</ProductMarketData>
+	<ProductMarketData>
+		<productID>5</productID>
+		<tickerSymbol>AXP</tickerSymbol>
+	</ProductMarketData>
+	<ProductMarketData>
+		<productID>6</productID>
+		<tickerSymbol>THI</tickerSymbol>
+	</ProductMarketData>
+	<ProductMarketData>
+		<productID>7</productID>
+		<tickerSymbol>TYO</tickerSymbol>
+	</ProductMarketData>
+</marketDataByProduct>
+<eventList>
+	<Event_S2C>
+		<ProductID>5</ProductID>
+		<name>A</name>
+		<description>Wells Fargo and American Express Launch Two New Credit Cards with Rich Rewards and Benefits.</description>
+		<tickerSymbol>AXP</tickerSymbol>
+		<dispatchTime>0</dispatchTime>
+	</Event_S2C>
+	<Event_S2C>
+		<ProductID>5</ProductID>
+		<name>B</name>
+		<description>American Express Serve Announces Larget Free Cash Reload Network in U.S.</description>
+		<tickerSymbol>AXP</tickerSymbol>
+		<dispatchTime>2</dispatchTime>
+		</Event_S2C>
+	<Event_S2C>
+		<ProductID>8</ProductID>
+		<name>C</name>
+		<description>Germany's Bayer plans to buy Merck &amp; Co.'s consumer care business for $14.2 billion.</description>
+		<tickerSymbol>MRK</tickerSymbol>
+		<dispatchTime>4</dispatchTime>
+	</Event_S2C>
+	<Event_S2C>
+		<ProductID>9</ProductID>
+		<name>D</name>
+		<description>Caterpillar's posts higher first-quarter profit, raises outlook.</description>
+		<tickerSymbol>CAT</tickerSymbol>
+		<dispatchTime>6</dispatchTime>
+	</Event_S2C>
+	<Event_S2C>
+		<ProductID>10</ProductID>
+		<name>E</name>
+		<description>Trulia CEO Sells $310,408 in Stock.</description>
+		<tickerSymbol>TRLA</tickerSymbol>
+		<dispatchTime>8</dispatchTime>
+	</Event_S2C>
+		<Event_S2C>
+		<ProductID>11</ProductID>
+		<name>F</name>
+		<description>Barclays Celebrates the Launch of the Barclays Women in Leadership Index and ETN.</description>
+		<tickerSymbol>BCS</tickerSymbol>
+		<dispatchTime>10</dispatchTime>
+	</Event_S2C>
+	<Event_S2C>
+		<ProductID>12</ProductID>
+		<name>G</name>
+		<description>Facebook acquires video ad company LiveRail.</description>
+		<tickerSymbol>FB</tickerSymbol>
+		<dispatchTime>12</dispatchTime>
+		</Event_S2C>
+	<Event_S2C>
+		<ProductID>13</ProductID>
+		<name>H</name>
+		<description>Trimel CEO acquires $25-million (U.S.) convertible note </description>
+		<tickerSymbol>TRL</tickerSymbol>
+		<dispatchTime>14</dispatchTime>
+	</Event_S2C>
+	<Event_S2C>
+		<ProductID>1</ProductID>
+		<name>I</name>
+		<description>Google Creates $100 Million VC Fund for Europe Tech</description>
+		<tickerSymbol>GOOG</tickerSymbol>
+		<dispatchTime>16</dispatchTime>
+	</Event_S2C>
+	<Event_S2C>
+		<ProductID>14</ProductID>
+		<name>J</name>
+		<description>TD Asset to change names of six Epoch-subadvised funds</description>
+		<tickerSymbol>TD</tickerSymbol>
+		<dispatchTime>18</dispatchTime>
+	</Event_S2C>
+</eventList>
+<!--pauseList>
+	<Pause_S2C>
+		<intervalID>0</intervalID>
+		<dispatchTime>5</dispatchTime>
+		<duration>2</duration>
+	</Pause_S2C>
+	<Pause_S2C>
+		<intervalID>1</intervalID>
+		<dispatchTime>10</dispatchTime>
+		<duration>2</duration>
+	</Pause_S2C>
+</pauseList-->
+<interruptList>
+	<Interrupt_S2C>
+		<interruptID>0</interruptID>
+		<dispatchTime>8</dispatchTime>
+		<duration>2</duration>
+	</Interrupt_S2C>
+	<Interrupt_S2C>
+		<interruptID>1</interruptID>
+		<dispatchTime>12</dispatchTime>
+		<duration>2</duration>
+	</Interrupt_S2C>
+</interruptList>
+<feedbackList>
+	<standardFeedback>
+		<feedbackID>0</feedbackID>
+		<forManualRequest>1</forManualRequest>
+		<message>Your manual order has been filled</message>
+	</standardFeedback>
+	<standardFeedback>
+		<feedbackID>1</feedbackID>
+		<forManualRequest>1</forManualRequest>
+		<message>Your manual order could not be filled due to insufficient account balance.</message>
+	</standardFeedback>
+	<standardFeedback>
+		<feedbackID>2</feedbackID>
+		<forManualRequest>1</forManualRequest>
+		<message>Your manual order could not be filled due to insufficient quantity.</message>
+	</standardFeedback>
+    <standardFeedback>
+        <feedbackID>3</feedbackID>
+        <forManualRequest>0</forManualRequest>
+        <message>Your algorithm has been launched</message>
+    </standardFeedback>
+    <standardFeedback>
+        <feedbackID>4</feedbackID>
+        <forManualRequest>0</forManualRequest>
+        <message>Your algorithm could not be launched</message>
+    </standardFeedback>
+    <standardFeedback>
+        <feedbackID>5</feedbackID>
+        <forManualRequest>0</forManualRequest>
+        <message>Your algorithm could not be launched due to insufficient account balance</message>
+    </standardFeedback>
+    <standardFeedback>
+        <feedbackID>6</feedbackID>
+        <forManualRequest>0</forManualRequest>
+        <message>Your algorithm could not be launched due to insufficient quantity.</message>
+    </standardFeedback>
+    <standardFeedback>
+        <feedbackID>7</feedbackID>
+        <forManualRequest>0</forManualRequest>
+        <message>Your algorithm has been stopped</message>
+    </standardFeedback>
+	<standardFeedback>
+		<feedbackID>8</feedbackID>
+		<forManualRequest>0</forManualRequest>
+		<message>Your portfolio has been updated.</message>
+	</standardFeedback>
+	<standardFeedback>
+		<feedbackID>9</feedbackID>
+		<forManualRequest>1</forManualRequest>
+		<message>Your portfolio has been updated.</message>
+	</standardFeedback>
+</feedbackList>
+</scenario>

@@ -1,0 +1,118 @@
+#orderpanel, #decisionpanel 
+{
+	padding: 5px;
+	background-color: lightgrey;
+	border:solid 1px #c3c3c3;
+	/*width:480px;*/
+	text-align:center;
+
+}
+#stockpurchasepanel
+{
+	padding:5px;
+	background-color: lightgrey;
+	border:solid 1px #c3c3c3;
+	width:480px;
+	text-align: left;
+	margin-bottom: 35px;
+
+}
+.selectWidth{
+	width:auto;
+	margin:10px;
+}
+
+.top-buffer{
+	margin-top:20px;
+	margin-bottom:40px;
+}
+
+.start-stop{
+	margin:20px;
+}
+
+#runningalgorithms
+{
+	padding: 5px;
+	background-color: lightgrey;
+	border:solid 1px #c3c3c3;
+	width:500px;
+	text-align:center;
+	margin-right:35px;
+
+}
+
+#algorithmpanel, #portfoliobody
+{
+	padding: 5px;
+	background-color: lightgrey;
+	border:solid 1px #c3c3c3;
+	/*width:400px;*/
+	text-align:center;
+}
+
+#algorithmspecpanel, #portfoliobody
+{
+	padding:5px;
+	background-color: lightgrey;
+	border:solid 1px #c3c3c3;
+	/*width:400px;*/
+	text-align: left;
+	margin-bottom: 35px;
+}
+
+#chartpanel
+{
+	padding: 5px;
+	background-color: lightgrey;
+	border:solid 1px #c3c3c3;
+	width:500px;
+	text-align:center;
+	margin-right:40px;
+}
+
+#portfoliopanel, #portfoliochartheader, #portfolioheader
+{
+	padding: 5px;
+	background-color: lightgrey;
+	border:solid 1px #c3c3c3;
+	/*width:480px;*/
+	text-align:center;
+}
+
+#stockselectheader, #stockselectbody
+{
+	padding:5px;
+	background-color: lightgrey; 
+	border: solid 1px #c3c3c3; 
+	text-align:center;
+	width: 125px;
+	margin-left:75px;
+}
+
+#eventspanel
+{
+  /*	padding: 5px;
+  	background-color: darkgrey;
+  	border: solid 1px #c3c3c3;
+  	text-align: center;
+  	margin-left: 5px;*/
+  	
+  	} 
+  	
+  #eventlist
+  {
+	padding: 7px;	
+  		}
+  		
+  #eventlist li 
+  {
+	color: white;
+	background-color: #428bca;
+	border: 3px solid darkblue;
+	margin-bottom: 4px;
+	list-style-position: inside;
+	border-radius: 3px;
+	padding: 2px;
+  					
+  			}

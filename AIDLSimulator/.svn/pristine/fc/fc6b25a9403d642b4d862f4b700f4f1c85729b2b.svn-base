@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- Meta tags describing webpage, identifying keywords, listing author, and defining charset-->
+<meta name = "description" content="Interrupt"> 
+<meta name = "keywords" content = "Interrupt">
+<meta name = "author" content = "Aditya Junnarkar">
+<!-- Import bootstrap meta characteristics to allow webpage to be responsive on mobile/tablet platforms-->
+<meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+<meta charset = "UTF-8">
+<title>Interrupt 1</title>
+</head>
+<body>
+<h1>Interrupt Pop-up 1</h1>
+</body>
+</html>

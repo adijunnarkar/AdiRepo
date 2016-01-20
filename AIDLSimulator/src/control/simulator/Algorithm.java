@@ -1,0 +1,199 @@
+package control.simulator;
+
+import java.util.*;
+
+import control.server.Server;
+import model.participant.Portfolio;
+import model.scenario.*;
+
+public class Algorithm {
+	
+	// An object of this class pertains to an Algorithm associated to a Product (such as MSFT)
+	
+	public int productID;
+	public boolean inEntryState = true;
+	public boolean active = false;
+	
+	private String description;
+	private int iterations;
+	private double totalAmtPurchased = 0.0;
+	private double totalAmtSold = 0.0;
+	public int totalOrders = 0;
+	public int ordersCompleted = 0;
+	private boolean changeInAmtPurchased;
+	private boolean changeInAmtSold;
+	private ArrayList<AlgorithmState> listOfStates = new ArrayList<AlgorithmState>();
+	private ArrayList<AlgorithmState> algorithmStateHistory = new ArrayList<AlgorithmState>();
+	private AlgorithmState currentState = new AlgorithmState();
+	
+	private static Scenario scenarioInstance = Scenario.getInstance();
+	private static Portfolio portfolioInstance = Portfolio.getInstance();
+	private static Server serverInstance = Server.getInstance();
+	
+	private boolean recentOrderExecution = false;
+	
+	public Algorithm (){
+		
+	}
+	
+	public Algorithm (int _productID, String _description, boolean _inEntryState, boolean _active){
+		
+		productID = _productID;
+		description = _description;
+		inEntryState = _inEntryState;
+		active = _active;
+		
+	}// Algorithm
+
+	public AlgorithmState getAlgorithmState(int timeStep){
+		
+		return null;
+		
+	}//AlgorithmState
+	
+	public String getDescription(){
+		return description;
+	}
+	
+	public double getTotalAmtPurchased(){
+		
+		return totalAmtPurchased;
+	}
+	
+	public double getTotalAmtSold(){
+		return totalAmtSold;
+	}
+	
+	public double getGainOrLoss(){
+	
+		if(totalAmtSold == 0.0 || totalAmtPurchased == 0.0){
+			return 0.0;
+		} else if(changeInAmtPurchased && changeInAmtSold ){	
+			System.out.println("Amt purchased "+totalAmtPurchased);
+			System.out.println("Amt sold "+ totalAmtSold);
+			return Math.floor((totalAmtSold - totalAmtPurchased)*100 + 0.5)/100;
+		} else return -1;
+	}
+	public ArrayList<AlgorithmState> getListOfStates(){
+		return listOfStates;
+	}
+	
+	private void sendBuyOrder(int quantity){
+		
+		portfolioInstance.buy(this.productID, quantity);
+	}
+
+	private void sendSellOrder(int quantity){
+	
+		portfolioInstance.sell(this.productID, quantity);
+	}
+	
+	
+	private void setCurrentAlgorithmState(AlgorithmState as) {
+		
+		currentState = as;
+	}
+	
+	
+	public AlgorithmState getCurrentAlgorithmState (){
+		
+		return currentState;
+			
+	}// getCurrentAlgorithmState
+	
+	public int getIterations(){
+		return iterations;
+	}
+	
+	public void updateIterations(){
+		iterations++;
+	}
+	
+	public void updateOrdersCompleted(){
+		++ ordersCompleted;
+	}
+	
+	public void setAlgoStateList(ArrayList<AlgorithmState> stateList){
+		
+		this.listOfStates = stateList;	
+		
+	}//setAlgoStateList
+	
+	
+	public void stopAlgorithm(){
+		if(active == true){
+			active = false;
+			serverInstance.sendTestString("Algorithm stopped.");
+		}
+	
+	}
+
+	public void startAlgorithm(){
+		
+		active = true;
+		this.currentState = this.listOfStates.get(0);
+		iterations = 1;
+		++totalOrders;
+		changeInAmtPurchased = false;
+		changeInAmtSold= false;
+		
+	}
+	
+
+	
+	public void stateUpdateLogic(){
+		
+	}
+	
+	
+	
+	public void stateUpdateLogic(double entryLimit, double exitLimit, int _quantity){
+		System.out.println("Entry Limit: "+ entryLimit);
+		System.out.println("Current close price " + scenarioInstance.getCurrentClosePrice(this.productID));
+		// implementation of a very simple BBB
+		recentOrderExecution = false;
+				
+		if ((!inEntryState) && (scenarioInstance.getCurrentClosePrice(this.productID) < exitLimit)){
+			System.out.println("Waiting for selling");
+			this.currentState = this.listOfStates.get(2);
+			
+		}
+		
+		else if ((!inEntryState) && (scenarioInstance.getCurrentClosePrice(this.productID) >= exitLimit)){
+			System.out.println("Sold");
+			sendSellOrder(_quantity);
+			totalAmtSold += scenarioInstance.getCurrentClosePrice(this.productID)* _quantity;
+			totalAmtSold = (double)Math.floor(totalAmtSold * 100 + 0.5)/100;
+			changeInAmtSold = true;
+			recentOrderExecution = true;
+			this.currentState = this.listOfStates.get(3);
+			
+			//this.stopAlgorithm();
+			inEntryState = true;
+		}
+		
+		
+		else if(inEntryState && (scenarioInstance.getCurrentClosePrice(this.productID) <= entryLimit)){
+			changeInAmtPurchased = false;
+			changeInAmtSold = false;
+			System.out.println("Bought");
+			sendBuyOrder(_quantity);
+			totalAmtPurchased += scenarioInstance.getCurrentClosePrice(this.productID)* _quantity;
+			totalAmtPurchased = (double)Math.floor(totalAmtPurchased * 100 + 0.5)/100;
+			changeInAmtPurchased = true;
+			recentOrderExecution = true;
+			this.currentState = this.listOfStates.get(1);
+			inEntryState = false;
+		} else if(inEntryState){
+			this.currentState= this.listOfStates.get(0);
+		}
+						
+	}//stateUpdateLogic
+	
+	
+	public boolean checkRecentOrderExec(){
+		
+		return this.recentOrderExecution;
+	}
+	 
+}// Algorithm

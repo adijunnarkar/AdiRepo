@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Meta tags describing webpage, identifying keywords, listing author, and defining charset-->
+	<meta name = "description" content="Participant interface for AIDL simulator"> 
+	<meta name = "keywords" content = "Portfolio summary, Events, Real-time feed, Trading panel,  Algorithm state display">
+	<meta name = "author" content = "Aditya Junnarkar">
+	<!-- Import bootstrap meta characteristics to allow webpage to be responsive on mobile/tablet platforms-->
+	<meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+	<meta charset = "UTF-8">
+
+	<!-- Import hosted jQuery library-->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<!-- Import minified jQuery UI Custom library for scroll bar -->
+	<script src= "js/jquery-ui-1.10.4.custom.min.js"></script>
+	<!-- Import local bootstrap library-->
+	<script src = "js/bootstrap.js"></script>
+		<!--  Use imported highstock.js plugin -->
+	<script src = "js/highstock.js"></script>
+	
+	<!--  Use imported amchart library -->
+
+	<script src="js/amcharts.js" type="text/javascript"></script> 	
+	<script src="js/serial.js" type="text/javascript"></script> 
+	<script src="js/pie.js" type="text/javascript"></script> 
+	<script src="js/amstock.js" type="text/javascript"></script>
+	
+	<!-- Use imported date.js library -->
+	<script src="js/date.js"></script>
+	
+	<!-- Use local script functions.js-->
+	<script src = "js/functions.js"></script>
+	<!-- Use local script objects.js-->
+	<script src = "js/objects.js"></script>
+	<!-- Use local script frontend.js-->
+	<script src = "js/frontend.js"></script>
+	
+	<!-- Use imported script - bootstrap-select.js-->
+	<script src = "js/bootstrap-select.js"></script>
+	
+	<!-- Use imported jQuery jqplot library -->
+	<script type="text/javascript" src="js/jquery.jqplot.min.js"></script>
+	
+	<!--[if lt IE 9]>
+	<script language="javascript" type="text/javascript" src="js/excanvas.min.js"></script>
+	<![endif]-->
+	
+	<!-- Use imported jq plot plugins -->
+	<script type="text/javascript" src="js/jqplot_plugins/jqplot.canvasTextRenderer.min.js"></script>
+	<script type="text/javascript" src="js/jqplot_plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
+	<script type="text/javascript" src="js/jqplot_plugins/jqplot.barRenderer.min.js"></script>
+	<script type="text/javascript" src="js/jqplot_plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
+	<script type="text/javascript" src="js/jqplot_plugins/jqplot.categoryAxisRenderer.min.js"></script>
+	<script type="text/javascript" src="js/jqplot_plugins/jqplot.pointLabels.min.js"></script>
+	<script type="text/javascript" src="js/jqplot_plugins/jqplot.cursor.min.js"></script>
+	<script type="text/javascript" src="js/jqplot_plugins/jqplot.dateAxisRenderer.min.js"></script>
+
+	
+	<!-- Import bootstrap stylesheet-->
+	<link rel = "stylesheet" href = "css/bootstrap.min.css">
+	<!-- Import jQuery UI custom stylesheet-->
+	<link rel="stylesheet" href="css/jquery-ui-1.10.4.custom.min.css">
+	<!-- Import jQuery JQ plot stylesheet-->
+	<link rel="stylesheet" href="css/jquery.jqplot.min.css">
+	<!-- Import local stylesheet - simulator_app.css-->
+	<link rel = "stylesheet" type = "text/css" href = "css/simulator_app.css">
+	<!-- Import Bootstrap select stylesheet-->
+	<link rel = "stylesheet" type="text/css" href="css/bootstrap-select.css">
+	<!-- Import amstock stylesheet style.css -->
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	
+<title>AIDL Simulator - Participant Interface</title>
+</head>
+
+<body onLoad="/*browserCheck();*/">
+<!-- Building navigation bar using bootstrap classes-->
+	<div class = "navbar  navbar-static-top" style= "text-align: center;">
+			<div  style="font-size: 22px;"><b>AIDL Simulator</b></div>
+	</div>
+	<div class="container-fluid">
+	<!--Generate first row-->
+		<div class ="row">
+			<!--Generate first column-->
+			<div class = "col-lg-6" style="padding-right: 5px">
+				<!--Portfolio Panel Header-->
+				<div id = "portfolio_panel" class = "panel_container btn-lg btn-block" >
+					<div class="header">Portfolio Summary </div>
+					<div style="margin-left: 50px;">
+						<!-- div>Account</div-->
+						<!-- div id="prog_bar" style="width: 75%; margin-top: 20px;"></div-->
+						<!-- div id="account_balance_chart" style="width: 70%; height: 190px"></div-->
+						<div id="cash_investment_piechart" style="width: 70%; height: 150px"></div>
+						<!-- div style="margin-top: 10px;"> </div-->
+							<!-- div id="qty_chart" ></div-->
+						<div style="float:left; width:50% ">
+							<div id="header">Asset Allocation Chart</div>
+							<div id="asset_allocation_piechart"></div>
+						</div>
+						<div id="portfolio_table" style="width:45%; margin-left: 10px; float: left">
+							<ul id="product_list" style="display:inline-block; width: 20%; float:left;">
+								<li><b>Product</b></li>
+					   			<!--  li>fhhgfhhfgh</li>
+					   			<li>fhhgfhhfgh</li>
+					   			<li>fhhgfhhfgh</li-->
+					   		</ul>
+					   		<ul id="quantity_list" style="display:inline-block; width: 20%; float:left;">
+					   			<li><b>Quantity Held</b></li>
+					   			<!--li>fhhgfhhfgh</li>
+					   			<li>fhhgfhhfgh</li>
+					   			<li>fhhgfhhfgh</li-->
+					 		</ul>
+				   			<ul id="curr_closeprice_list" style="display:inline-block; width: 20%; float:left;">
+				   				<li><b>Current Close Price</b></li>
+						   		<!--  li>fhhgfhhfgh</li>
+						   		<li>fhhgfhhfgh</li>
+						   		<li>fhhgfhhfgh</li-->
+					   		</ul>
+					   		<ul id="test1" style="display:inline-block; width: 20%; float:left;">
+						   		<li><b>Blank1</b></li>
+						   		
+					   		</ul>
+					   		<ul id="test2" style="display:inline-block; width: 20%; float:left;">
+						   		<li><b>Blank2</b></li>
+						   		
+					   		</ul>
+						</div>
+						<!--  div id="inv_chart" ></div--><br />
+					</div>
+				</div>
+				<!--Transaction Panel -->
+				<div id = "transaction_panel" class = "panel_container btn-lg btn-block" >
+					<div class="header" style="text-align: center">Transaction Panel</div>
+					<div class="trade_container">
+						<div id="manual" class="pull-left btn-lg " >
+							<div class="header">Manual Trade Request</div>
+							<form id="manual_order">
+							<div class="content">
+								<div>
+									<div id="man_select_container" class="inner_container pull-left">
+										<div class="header">Select Product</div>
+										<!--  ul id="man_select">
+										</ul-->
+										<select id="man_select" name="manualProduct">
+												<option selected>Select</option>
+										</select>
+									</div>
+									<div id= "price_input_manual_container" class= "inner_container" >
+											<div class="header">Enter Price ($) </div>
+											<input id="price_input_manual" name="requestedPriceManual" type = "text" size="7" maxlength="11" value=""/>
+									</div>
+									<div class="pull-right" style="text-align: right">
+										<div id="tif_container_manual" class="inner_container ">
+											<div class="header">Time in Force</div>
+											<select id="man_tif_select" name="timeInForce">
+												<option selected>Select</option>
+												<option value="OPG">OPG</option>
+												<option value="IOC">IOC</option>
+												<option value="GTD">GTD</option>
+												<option value="FOK">FOK</option>
+												<option value="DTC">DTC</option>
+											</select>
+										</div>
+										
+										<!-- div id= "prince_input_manual_container" class= "inner_container">
+											<div class="header">Enter Price</div>
+											<input id="price_input_manual" name="price_input_manual" type = "text" size="11" maxlength="11"/>
+										</div-->
+									</div>
+								</div>
+								<div class = "clearfix"></div>
+							
+								<div style = "height:90px /*140px*/">
+
+									<div class="inner_container  pull-left" style="padding-left: 0px; padding-right: 0px; width: 80px;">
+										<div class="header type_header" >Type</div>	
+										<input type = "radio" id="buy_man" name= "manualTradeType" value="buy" checked><label for="buy_man">Buy</label><br />
+										<input type = "radio" id="sell_man" name= "manualTradeType" value="sell"><label for="sell_man">Sell</label>
+									</div>
+									
+									<div class="inner_container  pull-right" style="vertical-align: top;">
+										<div class="header">Select Quantity</div>
+										<input id="quantitym_spinner" name = "quantityManual" />				
+									</div>
+								</div>
+								<input id="get_id_manual" type="hidden" name="ProductID" value =""/>
+								<input id="get_timestamp_manual" type="hidden" name="timestampManualOrder" value =""/>
+								<div class = "clearfix"></div>
+								<div style="text-align: center">
+									<input id="submit_order" type="submit" value = "Submit Order" class="btn btn-default" disabled/>
+								</div>
+								<div id="feedback_panel_manual" class="inner_container">
+									<div class="header">Feedback Panel</div>
+									<div class="content" style="overflow-y: auto; margin: 9px 2px 2px 2px; height: 75%; text-align: left"></div>
+								</div>							
+							</div>
+							</form>
+							
+						</div>
+						<div id="automatic" class="pull-right btn-lg ">
+							<div class="header">Algorithm Control</div>
+							<form id="algorithm_control">
+							<div class="content">
+								<div style="/*overflow:hidden*/">
+									<div id="auto_select_container" class="inner_container pull-left">
+										<div class="header">Select Product</div>
+										<!--  ul id="auto_select">
+										</ul-->
+										<select id="auto_select" name="autoProduct" style="">
+											<option selected>Select</option>
+										</select>
+									</div>
+									<div id="tif_container_auto" class="inner_container ">
+										<div class="header">Time in Force</div>
+										<select id="auto_tif_select" name="timeInForce" style="">
+											<option selected>Select</option>
+											<option value="OPG">OPG</option>
+											<option value="IOC">IOC</option>
+											<option value="GTD">GTD</option>
+											<option value="FOK">FOK</option>
+											<option value="DTC">DTC</option>
+										</select>
+									</div>
+									<div id="state_select_container " class="inner_container pull-right">
+										<div class="header">State Change</div>
+										<select name="stateChangeRequest" id="state_select" style="">
+											<option selected>Select</option>
+											<option value="Start">Start</option>
+											<option value="Stop">Stop</option>
+											<!--option value="Pause">Pause</option-->
+										</select>
+									</div>
+									
+								</div>
+								<div class = "clearfix"></div>
+								<div style="height: 90px/*140px*/">
+									<div class="inner_container  pull-left" style="padding-left: 0px; padding-right: 0px; vertical-align: top; width: 80px;">
+										<div class="header type_header">Type</div>
+										<input type = "radio" id="buy_auto" name= "isLong" value="1" checked><label for="buy_auto">Long</label><br />
+										<input type = "radio" id="sell_auto" name= "isLong" value="0"><label for="sell_auto">Short</label>
+									</div>
+									<div id ="spinner_container" class="inner_container" style="width: 145px; position:relative; left: 7px;">
+										<div class="header">Entry Threshold %</div>
+										<input name="entryThreshold" id="entry_spinner" style="" />
+										<div class="header">Exit Threshold %</div>
+										<input name ="exitThreshold" id="exit_spinner" style="" />
+									</div>
+									<div id= "iterations_container" class= "inner_container" style="position: relative; left: 8px; width: 88px" >
+											<div class="header">Iterations </div>
+											<input id="iterations" name="iterations" type ="text" size="3" maxlength="11" value=""/>
+									</div>
+									<div class="inner_container  pull-right" style="vertical-align: top; width: 90px; ">
+										<div class="header">Select <br/> Quantity</div>
+										<input id="quantitya_spinner" name="quantityAlgo" />
+									</div>
+								</div>
+								<input id="get_id_auto" type="hidden" name="ProductID" value =""/>
+								<input id="get_timestamp_auto" type="hidden" name="timestampAlgorithmRequest" value =""/>
+								<div class="clearfix"></div>
+								<div style="text-align: center;">
+									<input id="submit_state_change" type="submit" class="btn btn-default" value="Submit State Change Request" disabled />
+                            	</div>	
+                       		 	<div id="feedback_panel_algocontrol" class="inner_container">
+									<div class="header">Feedback Panel</div>
+									<div class="content" style="overflow-y: auto; margin: 9px 2px 2px 2px; height: 75%; text-align: left"></div>
+								</div>						
+							</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Generate second column-->
+			<div class = "col-lg-6" style="padding: 0px;">
+				<div  class="panel_container btn-lg" style="height: 1065px;" >
+				<!--Product Settings Display Panel -->
+					<div id = "product_settings_panel" class = "btn-lg btn-block" style="height: 18%">
+						<div class="header">Product Settings</div>
+						<div id="prod_cont" class = "btn-lg btn-block">
+							<div style="margin: 10px 60px 10px 60px;">
+								<div id="trade_categ_select" class="inner_container pull-left" style="padding-left: 0px; padding-right: 0px; vertical-align: top;">
+									<div class="header type_header">Select Category</div>
+									<div style="text-align: left; margin-left: 5px;">
+										<input type = "radio" id="man" name= "trade_categ" value="manual"><label for="man">Manual</label><br />
+										<input type = "radio" id="auto" name= "trade_categ" value="auto" ><label for="auto">Automatic</label>  
+								   </div>
+								</div>
+								<div id="product_select_container" class="inner_container " >
+									<div class="header">Select Product</div>
+									<!-- ul id="product_select_manual" >
+									</ul>
+									<ul id="product_select_auto">
+									</ul-->
+									<select id="product_select_manual" style="">
+										
+									</select>
+									<select id="product_select_auto" style="">
+									
+									</select>
+								</div>
+								<div id="data_param_select" class="inner_container pull-right" style="padding-left: 0px; padding-right: 0px; vertical-align: top; height: 112px;">
+									<div class="header type_header">Select Data Parameters</div>
+									<div style="text-align: left; margin-left: 5px;">
+										<input type = "checkbox" id="price_quote" name= "data_param" value="price_quotes" checked><label for="price_quote">Price Quotes</label><br />
+										<input type = "checkbox" id="volume" name= "data_param" value="volume"><label for="volume">Volume</label><br />
+										<input type = "checkbox" id="volatility" name= "data_param" value="volatility"><label for="volatility">Volatility</label>
+		                            </div>						
+								</div>				
+							</div>       
+						</div>
+					</div>
+
+					<!--Market Data Panel-->
+					<div id = "realtime_feed" class = "btn-lg btn-block"  style="height: 31%; padding-top: 0px; padding-bottom: 0px; margin-top: 0px;">
+						<div class="header">Market Data</div>
+						<div id="realtime_cont" class = "btn-lg btn-block" >
+							<div id="candlestick_chart" ></div>       
+		       			</div>
+					</div>
+					<!--Algorithm State Display Panel -->
+					<div id = "algorithms_panel" class = "btn-lg btn-block"  style="height: 25%; padding-top: 0px; padding-bottom: 0px;">
+						<div class="header">Algorithm State Display</div>
+						<div id="algo_cont" class = "btn-lg btn-block" >
+						<div id="algo_monitor" style="width:98%; margin-left: 10px; ">
+							<ul id="automated_product_list" style="display:inline-block; width: 10%; float:left;">
+								<li><b>Product</b></li>
+					   			<!--  li>fhhgfhhfgh</li>
+					   			<li>fhhgfhhfgh</li>
+					   			<li>fhhgfhhfgh</li-->
+					   		</ul>
+					   		<ul id="algorithm_list" style="display:inline-block; width: 10%; float:left;">
+					   			<li><b>Algorithm Type</b></li>
+					   			<!--li>fhhgfhhfgh</li>
+					   			<li>fhhgfhhfgh</li>
+					   			<li>fhhgfhhfgh</li-->
+					 		</ul>
+					 		<ul id="iteration_list" style="display:inline-block; width: 14%; float:left;">
+						   		<li><b>Current Iteration</b></li>
+						   		
+					   		</ul>
+					 		<ul id="current_state_list" style="display:inline-block; width: 31%; float:left;">
+					   			<li><b>Current State</b></li>
+					   			<!--li>fhhgfhhfgh</li>
+					   			<li>fhhgfhhfgh</li>
+					   			<li>fhhgfhhfgh</li-->
+					 		</ul>
+				   			<ul id="orders_completed_list" style="display:inline-block; width: 15%; float:left;">
+				   				<li><b>Orders Completed</b></li>
+						   		<!--  li>fhhgfhhfgh</li>
+						   		<li>fhhgfhhfgh</li>
+						   		<li>fhhgfhhfgh</li-->
+					   		</ul>
+					   		<ul id="total_profit_loss_list" style="display:inline-block; width: 20%; float:left;">
+						   		<li><b>P/L ($$)</b></li>
+						   		
+					   		</ul>
+					   		
+						</div>
+						<!--  table id="algo_monitor"  border="1">
+							<thead>
+								<tr>
+									<th>Product</th><th>Algorithm Type</th><th>Current State</th><th>Orders Completed</th><th>Total Amount Purchased ($$)</th><th>Total Amount Sold ($$)</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table-->      
+						</div>
+					</div>
+					<!--Events Panel-->
+					<div id = "events_panel" class = "btn-lg btn-block"  style="height: 35%; padding-top : 0px; margin-top: 0px;">
+						<div class="header">Events </div>
+						<div id="events_cont" class = "btn-lg btn-block" style="height: 65%">
+							<div id="event_list_container" >  
+						   		<!--  ul id="eventtimestamp_list" style="display:inline-block; width: 10%; float:left;">
+						   		<li><b>Time</b></li>
+						   		</ul>
+						   		<ul id="eventname_list" style="display:inline-block; width: 5%; float:left;">
+						   		<li><b>Label</b></li>
+						 		</ul>
+					   			<ul id="eventproduct_list" style="display:inline-block; width: 8%; float:left;">
+					   			<li><b>Product</b></li>
+						   		</ul>
+						   		<ul id="eventdescription_list" style="display:inline-block; width: 77%; float:left; ">
+						   		<li><b>Description</b></li>
+						   		</ul-->
+						
+
+						   		<ul id="eventtimestampheader_list"  style="display:inline-block; width: 10%; float:left;">
+						   			<li><b>Time</b></li>
+						   		</ul>
+						   		<ul id="eventlabelheader_list" style="display:inline-block; width: 5%; float:left;">
+						   			<li><b>Label</b></li>
+						   		</ul>
+						   		<ul id="eventproductheader_list"  style="display:inline-block; width: 8%; float:left;">
+						   			<li><b>Product</b></li>
+						   		</ul>
+						   		<ul id="eventdescriptionheader_list" style="display:inline-block; width: 77%; float:left; ">
+						   			<li><b>Description</b></li>						   							   		
+						   		</ul>
+						   		
+						   		<div id="event_overflow" style="height:71%; overflow-y: scroll; clear:left; position:relative; top: -1px; " >
+						   			<ul id="eventtimestampcontent_list"  style="display:inline-block; width: 10.2%; float:left;">
+						   				<!--  li>654654</li>
+						   				<li>654654</li>
+					   					<li>654654</li>
+						   				<li>654654</li-->
+						   			</ul>
+						   			<ul id="eventlabelcontent_list" style="display:inline-block; width: 5.1%; float:left;">
+						   				<!--  li>A</li>
+						   				<li>B</li>
+						   				<li>C</li>
+						   				<li>D</li-->
+						   			</ul>
+				   					<ul id="eventproductcontent_list" style="display:inline-block; width: 8.2%; float:left;">
+						   				<!--  li>A</li>
+						   				<li>B</li>
+						   				<li>C</li>
+						   				<li>D</li-->
+						   			</ul>
+						   			<ul id="eventdescriptioncontent_list" style="display:inline-block; width: 76.5%; float:left; ">
+						   				<!--li>45654</li>	
+						   				<li>654654</li>
+						   				<li>654654</li>
+						   				<li>654654</li-->					   							   		
+						   			</ul>
+						   		</div>
+						   </div>  
+				     	</div>
+					</div>
+				</div>		
+			</div>
+		</div>		
+	</div>	
+</body>
+</html>

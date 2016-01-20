@@ -1,0 +1,745 @@
+package model.scenario;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+
+import au.com.bytecode.opencsv.CSVReader;
+import control.simulator.*;
+import model.participant.*;
+
+//Below annotation defines root element of XML file  
+@XmlRootElement(name="scenario"/*, namespace = "org.arpit.javapostsforlearning.jaxb.Scenario"*/) 
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Scenario{
+	
+	// This class stores the scenario model. The model is updated as the interaction with the trader evolves
+	
+	private static Scenario scenarioInstance = null;
+	
+	public static ParticipantProfile profileInstance = ParticipantProfile.getInstance();
+	
+	private static int scenarioDuration; // xml
+	private static int numOfEvents; // xml
+	private static int numOfProducts; // xml
+	private static int numOfAutomatedProducts; // xml
+	private static int timeWindowForQuotes; // xml number of points in the chart window
+	
+	private static double entryThresholdMin; //xml
+	private static double entryThresholdMax;  //xml
+	private static double entryThresholdStep;  //xml
+	private static double exitThresholdMin;  //xml
+	private static double exitThresholdMax;  //xml
+	private static double exitThresholdStep;  //xml
+	
+	private static double initialAccountBalance = 0.0; // xml
+	
+	// XmlElementWrapper generates a wrapper element around XML representation  
+	@XmlElementWrapper(name = "initialShareQuantities")  
+	// XmlElement sets the name of the entities in collection  
+	@XmlElement(name = "quantity") 
+	private static ArrayList<Integer> initialShareQuantities = new ArrayList<Integer>(); // xml
+	
+	private static Simulator simulatorInstance = Simulator.getInstance();
+	private static ExperimentalSession experimentalSessionInstance = ExperimentalSession.getInstance();
+	public static ArrayList<Product> productList= new ArrayList<Product>(); // xml
+	public static  ArrayList<ProductMarketData> marketDataByProduct= new ArrayList<ProductMarketData>();
+	public static ArrayList<Event_S2C> eventList = new ArrayList<Event_S2C>(); //xml
+	public static ArrayList<Pause_S2C> pauseList = new ArrayList<Pause_S2C>(); //xml
+	public static ArrayList<FeedbackTemplate> feedbackList = new ArrayList<FeedbackTemplate>(); // xml
+	public static ArrayList<AlgorithmBehaviour> algoBehaviourList = new ArrayList<AlgorithmBehaviour>();
+	
+	public ScenarioInitializer_S2C scenarioInitializer = new ScenarioInitializer_S2C();
+	
+	private Scenario(){
+		
+	}
+	
+	public static Scenario getInstance(){
+		
+		if (scenarioInstance==null){
+			
+			scenarioInstance = new Scenario();
+		}
+		
+		return scenarioInstance;
+		
+	}
+	
+	public int getScenarioDuration(){
+		return scenarioDuration;
+	}
+	
+	@XmlElement
+	public void setScenarioDuration(int _scenarioDuration){
+		scenarioDuration = _scenarioDuration;
+	}
+	
+	public int getNumOfEvents(){
+		return numOfEvents;
+	}
+	
+	@XmlElement
+	public  void setNumOfEvents(int _numOfEvents){
+		numOfEvents = _numOfEvents;
+	}
+	
+	public int getNumOfProducts(){
+		return numOfProducts;
+	}
+	
+	@XmlElement
+	public void setNumOfProducts(int _numOfProducts){
+		numOfProducts = _numOfProducts;
+	}
+	
+	public int getNumOfAutomatedProducts(){
+		return numOfAutomatedProducts;
+	}
+	
+	@XmlElement
+	public void setNumOfAutomatedProducts(int _numOfAutomatedProducts){
+		numOfAutomatedProducts = _numOfAutomatedProducts;
+	}
+	
+	
+	public int getTimeWindowForQuotes(){
+		return timeWindowForQuotes;
+	}
+	
+	@XmlElement
+	public void setTimeWindowForQuotes(int _timeWindowForQuotes){
+		timeWindowForQuotes = _timeWindowForQuotes;
+	}
+	
+	public double getEntryThresholdMin(){
+		return entryThresholdMin;
+	}
+	
+	@XmlElement
+	public void setEntryThresholdMin( double _entryThresholdMin){
+		entryThresholdMin = _entryThresholdMin;
+	}
+	
+	public double getEntryThresholdMax(){
+		return entryThresholdMax;
+	}
+	
+	@XmlElement
+	public void setEntryThresholdMax( double _entryThresholdMax){
+		entryThresholdMax = _entryThresholdMax;
+	}
+	
+	public double getEntryThresholdStep(){
+		return entryThresholdStep;
+	}
+	
+	@XmlElement
+	public void setEntryThresholdStep( double _entryThresholdStep){
+		entryThresholdStep = _entryThresholdStep;
+	}
+	
+	public double getExitThresholdMin(){
+		return exitThresholdMin;
+	}
+	
+	@XmlElement
+	public void setExitThresholdMin( double _exitThresholdMin){
+		exitThresholdMin = _exitThresholdMin;
+	}
+	
+	public double getExitThresholdMax(){
+		return exitThresholdMax;
+	}
+	
+	@XmlElement
+	public void setExitThresholdMax( double _exitThresholdMax){
+		exitThresholdMax = _exitThresholdMax;
+	}
+	
+	public double getExitThresholdStep(){
+		return exitThresholdStep;
+	}
+	
+	@XmlElement
+	public void setExitThresholdStep( double _exitThresholdStep){
+		exitThresholdStep = _exitThresholdStep;
+	}
+	
+	public double getInitialAccountBalance(){
+		return initialAccountBalance;
+	}
+	
+	@XmlElement
+	public  void setInitialAccountBalance(double _initialAccountBalance){
+		initialAccountBalance = _initialAccountBalance;
+	}
+	
+	public ArrayList<Integer> getInitialShareQuantities(){
+		return initialShareQuantities;
+	}
+	
+	public  ArrayList<Product> getProductList(){
+		return productList;
+	}
+	
+	// XmLElementWrapper generates a wrapper element around XML representation  
+	@XmlElementWrapper(name = "productList")  
+	//XmlElement sets the name of the entities in collection  
+	@XmlElement(name = "Product")  
+	public void setProductList(ArrayList<Product> _productList){
+		productList = _productList;
+	}
+	
+	public ArrayList<ProductMarketData> getMarketDataByProduct(){
+		return marketDataByProduct;
+	}
+	
+	//XmLElementWrapper generates a wrapper element around XML representation  
+	@XmlElementWrapper(name = "marketDataByProduct")  
+	//XmlElement sets the name of the entities in collection  
+	@XmlElement(name = "ProductMarketData")
+	public  void setMarketDataByProduct(ArrayList<ProductMarketData> _marketData){
+		marketDataByProduct = _marketData;
+	}
+	
+	
+	public  ArrayList<Event_S2C> getEventList(){
+		return eventList;
+	}
+	
+	// XmLElementWrapper generates a wrapper element around XML representation  
+	  @XmlElementWrapper(name = "eventList")  
+	  // XmlElement sets the name of the entities in collection  
+	  @XmlElement(name = "Event_S2C")
+	public void setEventList(ArrayList<Event_S2C> _eventList){
+		eventList = _eventList;
+	}
+	
+	
+	public ArrayList<Pause_S2C> getPauseList(){
+		return pauseList;
+	}
+	
+	// XmLElementWrapper generates a wrapper element around XML representation  
+	@XmlElementWrapper(name = "pauseList")  
+	// XmlElement sets the name of the entities in collection  
+	@XmlElement(name = "Pause_S2C")
+	public void setPauseList(ArrayList<Pause_S2C> _pauseList){
+		pauseList = _pauseList;
+	}
+	
+	public ArrayList<FeedbackTemplate> getFeedbackList(){
+		return feedbackList;
+	}
+	
+	// XmLElementWrapper generates a wrapper element around XML representation  
+	@XmlElementWrapper(name = "feedbackList")  
+	// XmlElement sets the name of the entities in collection  
+	@XmlElement(name = "standardFeedback")
+	public void setFeedbackList(ArrayList<FeedbackTemplate> _feedbackList){
+		feedbackList = _feedbackList;
+	}
+  
+	
+	public static ArrayList<AlgorithmBehaviour> getAlgoBehaviourList(){
+		return algoBehaviourList;
+	}
+	
+	
+	public void loadSampleScenario(){
+		
+		try {  
+		     
+			// create JAXB context and initializing Marshaller  
+			JAXBContext jaxbContext = JAXBContext.newInstance(Scenario.class);  
+			  
+		   Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();  
+		  
+		   // specify the location and name of xml file to be read  
+		   File XMLfile = new File("", "Users\\Siddhanth\\workspace\\AIDLSimulator\\WebContent\\WEB-INF\\xml\\" + experimentalSessionInstance.getScenarioFilename());  
+			     
+		   // this will create Java object - scenario from the XML file  
+			     
+		   Scenario testscenario = (Scenario) jaxbUnmarshaller.unmarshal(XMLfile); 
+
+		   System.out.println("Scenario Duration: "+testscenario.getScenarioDuration());
+		   System.out.println("Num Of Products: "+testscenario.getNumOfProducts());  
+		   System.out.println("Time Window: "+testscenario.getTimeWindowForQuotes());
+		   System.out.println("Initial account balance: "+testscenario.getInitialAccountBalance());
+		   scenarioDuration=testscenario.getScenarioDuration();
+		   numOfProducts = testscenario.getNumOfProducts();
+		   numOfAutomatedProducts= testscenario.getNumOfAutomatedProducts();
+		   timeWindowForQuotes =testscenario.getTimeWindowForQuotes();
+		   entryThresholdMin =testscenario.getEntryThresholdMin();
+		   entryThresholdMax= testscenario.getEntryThresholdMax();
+		   entryThresholdStep = testscenario.getEntryThresholdStep();
+		   exitThresholdMin = testscenario.getExitThresholdMin();
+		   exitThresholdMax = testscenario.getExitThresholdMax();
+		   exitThresholdStep = testscenario.getExitThresholdStep();
+		   initialAccountBalance =testscenario.getInitialAccountBalance();
+		   eventList = testscenario.getEventList();
+		   productList = testscenario.getProductList();
+		   pauseList = testscenario.getPauseList();
+		   initialShareQuantities = testscenario.getInitialShareQuantities();
+		   marketDataByProduct = testscenario.getMarketDataByProduct();
+		   feedbackList = testscenario.getFeedbackList();
+		   
+		   CSVReader reader = null;
+		   
+		   // load market data from csv file
+		   
+		   try{
+			   reader = new CSVReader(new FileReader("C:\\Users\\Siddhanth\\workspace\\AIDLSimulator\\WebContent\\csv\\"+ experimentalSessionInstance.getCSVFilename()),',','\"', 2);
+			
+			   List<String []> content = reader.readAll();
+			   for(int i =0; i < content.size(); ++i){
+				   for(int j = 0; j < productList.size(); ++j ){
+					   int ind = 1 + 4*j;
+					   marketDataByProduct.get(j).getOpenPriceList().add(Double.parseDouble(content.get(i)[ind]));
+					   marketDataByProduct.get(j).getClosePriceList().add(Double.parseDouble(content.get(i)[++ind]));
+					   marketDataByProduct.get(j).getHighPriceList().add(Double.parseDouble(content.get(i)[++ind]));
+					   marketDataByProduct.get(j).getLowPriceList().add(Double.parseDouble(content.get(i)[++ind]));
+				   }
+			   }
+					 
+		   } catch (FileNotFoundException e) {
+				 e.printStackTrace();
+		   } catch (IOException e) {
+				 e.printStackTrace();
+		   } finally {
+			   if (reader != null) {
+				   try {
+						   reader.close();
+				   } catch (IOException e) {
+						   e.printStackTrace();
+				   }
+			   }
+		   }
+			   
+		   int k=0;   
+	   
+	   		for(Product product: productList ) {  
+	   			k++;  
+	   			System.out.println("Product IDs:"+k+": "+product.getProductID());  
+	   			System.out.println("Product Ticker symbols:"+k+" : "+product.getTickerSymbol());
+	   			System.out.println("Product sectors:"+k+" "+product.getProductSector());
+	   			System.out.println("Product automated:"+k+" "+product.isAutomated());
+			    
+	   		}
+			   
+	   		int j=0;   
+	   		for(Event_S2C event: eventList )  {
+	   			j++;  
+	   			System.out.println("event descriptions:"+j+":  "+event.getDesc());  
+	   			System.out.println("event dispatch times:"+j+":  "+event.getDispatchTime()); 
+	   			System.out.println("event names:"+j+": "+event.getName());
+	   			System.out.println("event ticker symbols:"+j+":  "+event.getTickerSymbol());
+	   		}
+			   
+	   		int l=0;   
+	   		for(Pause_S2C pause: pauseList){
+	   			System.out.println("pause dispatch:"+l+":  "+pause.getDispatchTime());  
+	   			System.out.println("pause duration:"+l+":  "+pause.getDuration()); 
+	   			System.out.println("pause interval ids:"+l+":  "+pause.getIntervalID());
+	   		}
+			   
+	   		int m=0;   
+	   		for(Integer initialqty: initialShareQuantities ) {  
+	   			m++;  
+	   			System.out.println("initial qtys:"+m+":  "+initialqty);  
+	   		}
+			   
+	   		int n=0;   
+	   		for(ProductMarketData productdata: marketDataByProduct )  {  
+	   			n++;  
+	   			System.out.println("tick sym:"+n+":  "+productdata.getTickerSymbol());
+	   			System.out.println("ID:"+n+" "+productdata.getID()); 
+			  
+	   			System.out.println("open:"+n+":  "+productdata.getOpenPriceList());
+	   			System.out.println("close:"+n+":  "+productdata.getClosePriceList()); 
+	   			System.out.println("high:"+n+":  "+productdata.getHighPriceList());
+	   			System.out.println("low:"+n+":  "+productdata.getLowPriceList());
+	   		}
+	   		
+	         
+	   		int o=0;   
+	   		for(FeedbackTemplate feedbackdata: feedbackList )  {  
+	   			o++;  
+	   			System.out.println("feedback ID:"+o+":  "+feedbackdata.getMsgIndex());
+	   			System.out.println("ismanualtrade? :"+o+" "+feedbackdata.forManualTrade());  
+	   			System.out.println("message:"+o+":  "+feedbackdata.getMessage());
+
+	   		}
+	   		
+		} catch (JAXBException e) {  
+				  // some exception occured  
+			  e.printStackTrace();  
+		} 
+		
+		profileInstance.portfolioInstance.setAccountBalance(initialAccountBalance);
+		for(int k = 0; k < marketDataByProduct.size(); ++k){
+
+			marketDataByProduct.get(k).updatePrices();
+		}
+		
+		for(int k = 0; k < numOfProducts; ++k ){
+			profileInstance.portfolioInstance.loadPreexistingAsset(productList.get(k).ProductID, productList.get(k).getTickerSymbol(), getInitialShareQuantities(k));
+
+		}
+		
+		scenarioInitializer.assignInitialAcctBal(profileInstance.portfolioInstance.getAccountBalance());
+		scenarioInitializer.assignInitialAssetList(profileInstance.portfolioInstance.assetList);
+		scenarioInitializer.assignInitialProductList(productList);
+		scenarioInitializer.assignNumProducts(numOfProducts);
+		scenarioInitializer.assignTimeWindowForQuotes(timeWindowForQuotes);
+		scenarioInitializer.assignScenarioDuration(scenarioDuration);
+		scenarioInitializer.assignNumOfAutomatedProducts(numOfAutomatedProducts);
+		scenarioInitializer.assignEntryThresholdMin(entryThresholdMin);
+		scenarioInitializer.assignEntryThresholdMax(entryThresholdMax);
+		scenarioInitializer.assignEntryThresholdStep(entryThresholdStep);
+		scenarioInitializer.assignExitThresholdMin(exitThresholdMin);
+		scenarioInitializer.assignExitThresholdMax(exitThresholdMax);
+		scenarioInitializer.assignExitThresholdStep(exitThresholdStep);
+		
+	  /*  numOfEvents = 5;
+		setupInitialModelState();
+
+		ArrayList<Double> open_pricelist= new ArrayList<Double>();
+		ArrayList<Double> close_pricelist= new ArrayList<Double>();
+		ArrayList<Double> high_pricelist= new ArrayList<Double>();
+		ArrayList<Double> low_pricelist= new ArrayList<Double>();
+		double random_closeprice, random_highprice, random_lowprice, random_lowopenprice, random_highopenprice;
+	
+		//MSFT
+		for( int j=0; j < scenarioDuration; ++j){
+			 random_closeprice = (double)(Math.floor((40 + (Math.random() * (60 - 40)))*100 + 0.5)/100);
+			 random_highprice = (double)(Math.floor((random_closeprice + 2*((double)((1 + (Math.random() * (4 - 1))))))*100 + 0.5)/100);
+			 random_lowprice = (double)(Math.floor((random_closeprice - 2*((double)((1 + (Math.random() * (4 - 1))))))*100 + 0.5)/100);
+			 random_lowopenprice= (double)random_lowprice + (0.5 + (Math.random() * (4 - 0.5)));
+			 random_highopenprice= (double)random_highprice - (0.5 + (Math.random() * (4 - 0.5)));
+			 close_pricelist.add(random_closeprice);
+			 open_pricelist.add((double)(Math.floor((random_lowopenprice + (Math.random() * (random_highopenprice - random_lowopenprice)))*100 + 0.5)/100)); //Generate random value in range [40, 60)
+			 high_pricelist.add(random_highprice); 
+			 low_pricelist.add(random_lowprice); 
+		}
+		
+		//GOOG
+		for( int j=0; j < scenarioDuration; ++j){
+			 random_closeprice = (double)(Math.floor((450 + (Math.random() * (520 - 450)))*100 + 0.5)/100);
+			 random_highprice = (double)(Math.floor((random_closeprice + 2*((double)((1 + (Math.random() * (4 - 1))))))*100 + 0.5)/100);
+			 random_lowprice = (double)(Math.floor((random_closeprice - 2*((double)((1 + (Math.random() * (4 - 1))))))*100 + 0.5)/100);
+			 random_lowopenprice= (double)random_lowprice + (0.5 + (Math.random() * (4 - 0.5)));
+			 random_highopenprice= (double)random_highprice - (0.5 + (Math.random() * (4 - 0.5)));
+			 close_pricelist.add(random_closeprice);   //Generate random value in range [450, 520)
+			 open_pricelist.add((double)(Math.floor((random_lowopenprice + (Math.random() * (random_highopenprice - random_lowopenprice)))*100 + 0.5)/100)); //Generate random value in range [40, 60)
+			 high_pricelist.add(random_highprice); 
+			 low_pricelist.add(random_lowprice); 
+		
+		
+		}
+		
+		//AAPL
+		for( int j=0; j < scenarioDuration; ++j){
+			 random_closeprice = (double)(Math.floor((90 + (Math.random() * (110 - 90)))*100 + 0.5)/100);
+			 random_highprice = (double)(Math.floor((random_closeprice + 2*((double)((1 + (Math.random() * (4 - 1))))))*100 + 0.5)/100);
+			 random_lowprice = (double)(Math.floor((random_closeprice - 2*((double)((1 + (Math.random() * (4 - 1))))))*100 + 0.5)/100);
+			 random_lowopenprice= (double)random_lowprice + (0.5 + (Math.random() * (4 - 0.5)));
+			 random_highopenprice= (double)random_highprice - (0.5 + (Math.random() * (4 - 0.5)));
+			 close_pricelist.add(random_closeprice);   //Generate random value in range [90, 110)
+			 open_pricelist.add((double)(Math.floor((random_lowopenprice + (Math.random() * (random_highopenprice - random_lowopenprice)))*100 + 0.5)/100)); //Generate random value in range [40, 60)
+			 high_pricelist.add(random_highprice); 
+			 low_pricelist.add(random_lowprice); 
+		}
+		
+		// IBM
+		for( int j=0; j < scenarioDuration; ++j){
+			 random_closeprice = (double)(Math.floor((170 + (Math.random() * (190 - 170)))*100 + 0.5)/100);
+			 random_highprice = (double)(Math.floor((random_closeprice + 2*((double)((1 + (Math.random() * (4 - 1))))))*100 + 0.5)/100);
+			 random_lowprice = (double)(Math.floor((random_closeprice - 2*((double)((1 + (Math.random() * (4 - 1))))))*100 + 0.5)/100);
+			 random_lowopenprice= (double)random_lowprice + (0.5 + (Math.random() * (5 - 0.5)));
+			 random_highopenprice= (double)random_highprice - (0.5 + (Math.random() * (5 - 0.5)));
+			 close_pricelist.add(random_closeprice);   //Generate random value in range [90, 110)
+			 open_pricelist.add((double)(Math.floor((random_lowopenprice + (Math.random() * (random_highopenprice - random_lowopenprice)))*100 + 0.5)/100)); //Generate random value in range [40, 60)
+			 high_pricelist.add(random_highprice); 
+			 low_pricelist.add(random_lowprice); 
+		
+		
+		}
+			
+	//	int len = pricelist.size();
+
+		ProductMarketData obj1 = new ProductMarketData(0, "MSFT", open_pricelist.subList(0, scenarioDuration), close_pricelist.subList(0, scenarioDuration), high_pricelist.subList(0, scenarioDuration), low_pricelist.subList(0, scenarioDuration));
+		ProductMarketData obj2 = new ProductMarketData(1, "GOOG", open_pricelist.subList(scenarioDuration, 2*scenarioDuration), close_pricelist.subList(scenarioDuration, 2*scenarioDuration), high_pricelist.subList(scenarioDuration, 2*scenarioDuration), low_pricelist.subList(scenarioDuration, 2*scenarioDuration));
+		ProductMarketData obj3 = new ProductMarketData(3, "AAPL", open_pricelist.subList(scenarioDuration*2, scenarioDuration*3), close_pricelist.subList(scenarioDuration*2, scenarioDuration*3), high_pricelist.subList(scenarioDuration*2, scenarioDuration*3), low_pricelist.subList(scenarioDuration*2, scenarioDuration*3));
+		ProductMarketData obj4 = new ProductMarketData(4, "IBM", open_pricelist.subList(scenarioDuration*3, scenarioDuration*4), close_pricelist.subList(scenarioDuration*3, scenarioDuration*4), high_pricelist.subList(scenarioDuration*3, scenarioDuration*4), low_pricelist.subList(scenarioDuration*3, scenarioDuration*4));
+		
+		productList.add(new Product(0, "Technology", false, "MSFT"));
+		productList.add(new Product(1, "Technology", false, "GOOG"));
+		productList.add(new Product(3, "Technology", true, "AAPL"));
+		productList.add(new Product(4, "Technology", true, "IBM"));
+		
+
+		marketDataByProduct.add(obj1); 
+		marketDataByProduct.add(obj2);
+		marketDataByProduct.add(obj3);
+		marketDataByProduct.add(obj4);
+		
+		System.out.println("size= " + marketDataByProduct.size());
+		
+		for(int k = 0; k < marketDataByProduct.size(); ++k){
+		//	marketDataByProduct.get(k).updateCurrentPrice();
+			marketDataByProduct.get(k).updatePrices();
+		}
+		
+		
+		profileInstance.portfolioInstance.loadPreexistingAsset(0, "MSFT", getInitialShareQuantities(0));
+		profileInstance.portfolioInstance.loadPreexistingAsset(1, "GOOG", getInitialShareQuantities(1));
+		profileInstance.portfolioInstance.loadPreexistingAsset(3, "AAPL", getInitialShareQuantities(2));
+		profileInstance.portfolioInstance.loadPreexistingAsset(4, "IBM", getInitialShareQuantities(3));
+		
+		scenarioInitializer.assignInitialAcctBal(profileInstance.portfolioInstance.getAccountBalance());
+		scenarioInitializer.assignInitialAssetList(profileInstance.portfolioInstance.assetList);
+		scenarioInitializer.assignInitialProductList(productList);
+		scenarioInitializer.assignNumProducts(numOfProducts);
+		scenarioInitializer.assignTimeWindowForQuotes(timeWindowForQuotes);
+		scenarioInitializer.assignScenarioDuration(scenarioDuration);
+		scenarioInitializer.assignNumOfAutomatedProducts(numOfAutomatedProducts);
+		int a = 65, k = 0;
+		
+		eventList.add(new Event_S2C((char)(a++)+"", "Wells Fargo and American Express Launch Two New Credit Cards with Rich Rewards and Benefits.", "AXP", k*2, k++) );
+		eventList.add(new Event_S2C((char)(a++)+"", "American Express Serve Announces Larget Free Cassh Reload Network in U.S.", "AXP", k*2,k++) );
+		eventList.add(new Event_S2C((char)(a++)+"", "Germany's Bayer plans to buy Merck & Co.'s consumer care business for $14.2 billion.","MRK", k*2,k++ ) );
+		eventList.add(new Event_S2C((char)(a++)+"", "Caterpillar's posts higher first-quarter profit, raises outlook.","CAT", k*2, k++) );
+		eventList.add(new Event_S2C((char)(a++)+"", "Trulia CEO Sells $310,408 in Stock.","TRLA", k*2, k++) );
+		
+		pauseList.add(new Pause_S2C(0, 5, 3));
+		pauseList.add(new Pause_S2C(1, 10, 2));*/
+		//pauseList.add(new Pause_S2C(2, 15, 2));
+	//	pauseList.add(new Pause_S2C(3, 20, 2));
+		
+		
+		// Adding the same set of states to AlgorithmBehaviour's for all automated products
+		
+		for (int p = 0; p < productList.size(); p++){
+			
+			if (!productList.get(p).isAutomated()) continue;
+			
+			AlgorithmState entryBuySignal = new AlgorithmState(0,productList.get(p).ProductID, " Entry: Waiting for Buy Signal");
+			AlgorithmState entryBuyOrderSent = new AlgorithmState(1, productList.get(p).ProductID,  "Entry: Sent Buy Order");
+			AlgorithmState exitSellSignal = new AlgorithmState(2, productList.get(p).ProductID,  "Exit: Waiting for Sell Signal");
+			AlgorithmState exitSellOrderSent = new AlgorithmState(3, productList.get(p).ProductID, "Exit: Sent Sell Order");
+			
+			AlgorithmBehaviour algoBehaviour = new AlgorithmBehaviour(productList.get(p).ProductID);
+			
+			algoBehaviour.addStateToAlgorithm(entryBuySignal);
+			algoBehaviour.addStateToAlgorithm(entryBuyOrderSent);
+			algoBehaviour.addStateToAlgorithm(exitSellSignal);
+			algoBehaviour.addStateToAlgorithm(exitSellOrderSent);
+			
+			algoBehaviourList.add(algoBehaviour);
+		
+		}// p loop
+		
+		
+		
+		// Add the required algorithms to the Simulator
+		
+		for (int q=0; q<productList.size(); q++){
+			
+			if (!productList.get(q).isAutomated()) continue;
+			
+			Algorithm al = new Algorithm(productList.get(q).ProductID, "BBB", true, false);
+			
+			simulatorInstance.addAlgorithm(al);
+			
+		}// q loop
+		
+		
+		// add the respective states for each algorithm
+		for (int z=0; z<productList.size(); z++){
+			
+			if (!productList.get(z).isAutomated()) continue;
+			
+			AlgorithmBehaviour behavior = getAlgorithmBehaviour(productList.get(z).ProductID);
+			
+			simulatorInstance.getAlgorithm(productList.get(z).ProductID).setAlgoStateList(behavior.getAlgoStateList());
+				
+		}// z loop
+		
+		
+	}// loadSampleScenario
+	
+	
+	public static double getCurrentOpenPrice(int ProductID){
+		
+		for(int k = 0; k < marketDataByProduct.size(); k++){
+			
+			if(marketDataByProduct.get(k).productID == ProductID){
+				return marketDataByProduct.get(k).getCurrentOpenPrice();
+			}
+			
+		}//k
+		
+		return 0.0;
+		
+	}//getCurrentOpenPrice
+	
+	public static double getCurrentClosePrice(int ProductID){
+		
+		for(int k = 0; k < marketDataByProduct.size(); k++){
+			
+			if(marketDataByProduct.get(k).productID == ProductID){
+				return marketDataByProduct.get(k).getCurrentClosePrice();
+			}
+			
+		}//k
+		
+		return 0.0;
+		
+	}//getCurrentClosePrice
+	
+	public static double getCurrentHighPrice(int ProductID){
+		
+		for(int k = 0; k < marketDataByProduct.size(); k++){
+			
+			if(marketDataByProduct.get(k).productID == ProductID){
+				return marketDataByProduct.get(k).getCurrentHighPrice();
+			}
+			
+		}//k
+		
+		return 0.0;
+		
+	}//getCurrenHighPrice
+	
+	public static double getCurrentLowPrice(int ProductID){
+		
+		for(int k = 0; k < marketDataByProduct.size(); k++){
+			
+			if(marketDataByProduct.get(k).productID == ProductID){
+				return marketDataByProduct.get(k).getCurrentLowPrice();
+			}
+			
+		}//k
+		
+		return 0.0;
+		
+	}//getCurrentLowPrice
+
+
+	public static ProductMarketData getMarketDataForProduct(int ProductID){
+				
+		for(int k = 0; k < marketDataByProduct.size(); k++){
+			
+			if(ProductID == marketDataByProduct.get(k).productID){
+				return marketDataByProduct.get(k);
+			}
+			
+		}//k
+		
+		return null;
+		
+	}// getMarketDataForProduct
+	
+	public static void setupInitialModelState(){  //not used
+		
+		/*  This function sets the initial values for a number of variables that need initial values
+		 *  list of variables include:
+		 *  accountBalance
+		 *  list of stocks and quantity invested in each stock
+		 */
+		
+		initialAccountBalance = 10000.00;
+		initialShareQuantities.add(20); // Product ID 0
+		initialShareQuantities.add(30); // Product ID 1
+		initialShareQuantities.add(20); // Product ID 3
+		initialShareQuantities.add(30); // Product ID 4
+		
+		profileInstance.portfolioInstance.setAccountBalance(initialAccountBalance);
+		timeWindowForQuotes = 30;
+		scenarioDuration = 60;
+		numOfProducts = 4;
+		numOfAutomatedProducts = 2; 
+				
+	}//setupInitialModelState
+	
+	
+	public static int getInitialShareQuantities(int _productID){
+		
+		for(int k = 0; k < initialShareQuantities.size(); ++k){
+			
+			if(_productID == k) return initialShareQuantities.get(k);
+			
+		}//k
+		
+		return 0;
+		
+	}//getInitialShareQuantities
+	
+	
+	public static int getPauseDelaysAccumulation(int timeStep){
+		
+		int totalPauseDelay = 0;
+
+		for(int k = 0; k < pauseList.size(); k++){
+			if(pauseList.get(k).getDispatchTime() <= timeStep) {
+				totalPauseDelay = totalPauseDelay + pauseList.get(k).getDuration();
+			}
+		}// k loop
+		
+		return totalPauseDelay;	
+		
+			
+	}//getPauseDelaysAccumulation
+	
+	
+	public static AlgorithmBehaviour getAlgorithmBehaviour(int productID){
+		
+		for(int j = 0; j< algoBehaviourList.size(); j++){
+			
+			if(algoBehaviourList.get(j).productID==productID){
+				return algoBehaviourList.get(j);
+			}
+			
+		}//j
+		
+		return null;
+		
+	}// getAlgorithmBehaviour
+	
+	public static FeedbackTemplate getFeedbackTemplate(int _feedbackID){
+		
+		for(int k = 0; k < feedbackList.size(); k++){
+			
+			if(feedbackList.get(k).feedbackID == _feedbackID){
+				
+				return feedbackList.get(k);
+				
+			}
+			
+		}// k 
+		
+		return null;
+		
+	}// getFeedback
+	
+	
+	public static void addFeedbackTemplate(FeedbackTemplate _template){
+		
+		feedbackList.add(_template);
+		
+	}// setFeedback
+		
+}// Scenario

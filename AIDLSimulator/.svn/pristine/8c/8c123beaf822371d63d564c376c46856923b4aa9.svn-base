@@ -1,0 +1,487 @@
+package control.simulator;
+
+
+import java.util.ArrayList;
+import java.util.TimerTask;
+
+import model.participant.ParticipantProfile;
+import model.scenario.Scenario;
+import control.server.Server;
+
+public class StateUpdateControl extends TimerTask {
+	
+	public Simulator simulatorInstance = Simulator.getInstance();
+	public static Scenario scenarioInstance = Scenario.getInstance(); 
+	public static ParticipantProfile profileInstance = ParticipantProfile.getInstance();
+	public static Server serverInstance = Server.getInstance();
+	public static ArrayList<AlgorithmControlRequest_C2S> controlRequestList = new ArrayList<AlgorithmControlRequest_C2S>();
+	public StateUpdateControl (){
+	
+	}
+	
+	// All updates at a given time step are incorporated in this function
+	public void run(){
+				    
+			// all model update code will be applied here.. 
+			serverInstance.sendTestString("StateUpdateControl");
+						
+			try{
+				
+				updateAlgorithms();
+				
+			}
+			catch (Exception e) {
+			
+			// enter any exception handling code here
+			
+			}
+			
+			try{
+				
+				reevaluateAssetsUponMarketUpdate();
+					
+			}
+			catch (Exception e) {
+				
+				// enter any exception handling code here
+				
+			}
+			
+			try{
+				
+				updatePortfolio();
+				
+			}
+			catch (Exception e) {
+			
+			// enter any exception handling code here
+			
+			}
+			
+			
+			try{
+				
+				updatePerformance();
+				
+			}
+			catch (Exception e) {
+			
+			// enter any exception handling code here
+			
+			}
+			
+			
+			try{
+			
+				communicateAllFeedback();
+				
+			}
+			catch (Exception e){
+				
+			}
+			
+			
+			try{
+				
+				saveData();
+				
+			}
+			catch (Exception e) {
+			
+			// enter any exception handling code here
+			
+			}
+				
+			
+			try{
+				
+				updateTimeVars();
+			
+			}
+			catch (Exception e){
+				
+				// enter any exception handling code here
+			
+			}
+	
+	}// end run()
+	
+	
+	/*
+	public void updateAlgorithms(){
+		
+		// check for state change requests from front end
+		if (serverInstance.algoControlRequestBuffer.checkForIncomingControlRequest()==1){
+			
+			int _sentProductID = serverInstance.algoControlRequestBuffer.ProductID;
+			
+			if(serverInstance.algoControlRequestBuffer.getStateChangeRequested().equals("Start"))
+				{ 
+					simulatorInstance.getAlgorithm(_sentProductID).startAlgorithm();
+					
+					double targetEntryLimit = 0.0;
+					double targetExitLimit = 0.0;
+					
+					targetEntryLimit = (1.0000 - (serverInstance.algoControlRequestBuffer.getEntryThresholdPct()/100.0)) * scenarioInstance.getCurrentClosePrice(_sentProductID);
+					targetExitLimit = (1.0000 + (serverInstance.algoControlRequestBuffer.getExitThresholdPct()/100.0)) * scenarioInstance.getCurrentClosePrice(_sentProductID);
+					
+					serverInstance.algoControlRequestBuffer.setTargetEntryLimit(targetEntryLimit);
+					serverInstance.algoControlRequestBuffer.setTargetExitLimit(targetExitLimit);
+					
+				}
+			
+			else if (serverInstance.algoControlRequestBuffer.getStateChangeRequested().equals("Stop")){
+				simulatorInstance.getAlgorithm(_sentProductID).stopAlgorithm();
+				}
+			
+			serverInstance.algoControlRequestBuffer.resetIncomingControlRequest();
+		}
+		
+		// Update all algorithm states
+		for(int al=0; al<scenarioInstance.productList.size(); al++){
+			
+			if(!scenarioInstance.productList.get(al).isAutomated) continue;
+			
+			if(!simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).active) continue;
+			
+				double entry = serverInstance.algoControlRequestBuffer.getTargetEntryLimit();
+				double exit = serverInstance.algoControlRequestBuffer.getTargetExitLimit();
+				simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).stateUpdateLogic(entry, exit, serverInstance.algoControlRequestBuffer.getRequestedQuantity());	
+			
+				if(simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).checkRecentOrderExec()){
+			
+					AssetUpdate_S2C asset_obj = new AssetUpdate_S2C();
+					AccountUpdate_S2C account_obj = new AccountUpdate_S2C();
+			
+					asset_obj.setProductID(scenarioInstance.productList.get(al).ProductID);
+					asset_obj.setTickerSymbol(scenarioInstance.productList.get(al).tickerSymbol);
+					asset_obj.setAssetCurrVal(profileInstance.portfolioInstance.getAssetCurrentValue(scenarioInstance.productList.get(al).ProductID));
+					asset_obj.setQuantityHeld(profileInstance.portfolioInstance.getAssetQuantityHeld(scenarioInstance.productList.get(al).ProductID));
+			
+					String tradeType = "";
+			
+					if(simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).inEntryState)
+						tradeType = ""+"buy";
+					else
+						tradeType = ""+"sell";
+			
+					asset_obj.setTradeType(tradeType);
+					serverInstance.sendAsset(asset_obj);
+
+					account_obj.setAccountBalance(profileInstance.portfolioInstance.getAccountBalance());
+					serverInstance.sendAccountInfo(account_obj);
+			
+				}//checkRecentOderExec
+			
+		}//al loop
+		
+		// update the Algorithm State Display at front end
+		AlgorithmUpdate_S2C algorithms_obj = new AlgorithmUpdate_S2C();
+		
+		algorithms_obj.setTickerSymbol("AAPL");
+		algorithms_obj.setCurrentState("Entry: Waiting for Buy Signal");
+		algorithms_obj.setAlgoType("BBB");
+		algorithms_obj.setOrdersCompleted("0/2");
+		algorithms_obj.setTotalAmountPurchased(120.00);
+		algorithms_obj.setTotalAmountSold(500.00);
+			
+		serverInstance.sendAutomatedAssetInfo(algorithms_obj);
+		
+	}// updateAlgorithms
+	*/
+	
+	
+	public void updateAlgorithms(){
+		
+		// check for state change requests from front end
+		
+		
+		
+		if (!serverInstance.isAlgoControlRequestBufferEmpty()){	
+			AlgorithmControlRequest_C2S acr = new AlgorithmControlRequest_C2S();
+			acr = serverInstance.popAlgorithmControlTradeRequest();			
+	
+				int _sentProductID = acr.ProductID;
+			
+				if(acr.getStateChangeRequested().equals("Start")) { 
+					simulatorInstance.getAlgorithm(_sentProductID).startAlgorithm();
+					
+					double targetEntryLimit = 0.0;
+					double targetExitLimit = 0.0;
+					
+					targetEntryLimit = (1.0000 - (acr.getEntryThresholdPct()/100.0)) * scenarioInstance.getCurrentClosePrice(_sentProductID);
+					targetExitLimit = (1.0000 + (acr.getExitThresholdPct()/100.0)) * scenarioInstance.getCurrentClosePrice(_sentProductID);
+					
+					acr.setTargetEntryLimit(targetEntryLimit);
+					acr.setTargetExitLimit(targetExitLimit);
+					controlRequestList.add(acr);
+				}
+			
+				else if (acr.getStateChangeRequested().equals("Stop")){
+					simulatorInstance.getAlgorithm(_sentProductID).stopAlgorithm();
+				}
+			
+				while(!serverInstance.isAlgoControlRequestBufferEmpty()){
+					
+					// this ensures that only one algorithm control request can be placed in a single time step
+					serverInstance.popAlgorithmControlTradeRequest();
+				}
+			
+		}
+		
+		
+		// Update all algorithm states
+		for(int al=0; al<scenarioInstance.productList.size(); al++){
+			
+			if(!scenarioInstance.productList.get(al).isAutomated()) continue;
+			
+			if(!simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).active) continue;
+			
+				for(int k = 0; k < controlRequestList.size(); ++k){
+					if(controlRequestList.get(k).ProductID == scenarioInstance.productList.get(al).ProductID){
+						double entry = controlRequestList.get(k).getTargetEntryLimit();
+						double exit =  controlRequestList.get(k).getTargetExitLimit();
+						System.out.println("entry "+ entry);
+						System.out.println("exit "+ exit);
+
+						simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).stateUpdateLogic(entry, exit, controlRequestList.get(k).getRequestedQuantity());	
+						System.out.println("ID: "+scenarioInstance.productList.get(al).ProductID + "Entry? " +simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).inEntryState);
+						if(simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).checkRecentOrderExec()){
+							System.out.println("Algo launched!");
+							AssetUpdate_S2C asset_obj = new AssetUpdate_S2C();
+							AccountUpdate_S2C account_obj = new AccountUpdate_S2C();
+					
+							asset_obj.setProductID(scenarioInstance.productList.get(al).ProductID);
+							asset_obj.setTickerSymbol(scenarioInstance.productList.get(al).getTickerSymbol());
+							asset_obj.setAssetCurrVal(profileInstance.portfolioInstance.getAssetCurrentValue(scenarioInstance.productList.get(al).ProductID));
+							asset_obj.setQuantityHeld(profileInstance.portfolioInstance.getAssetQuantityHeld(scenarioInstance.productList.get(al).ProductID));
+					
+							String tradeType = "";
+					
+							if(/*simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).inEntryState*/simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).getCurrentAlgorithmState() == simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).getListOfStates().get(1))
+								tradeType = ""+"buy";
+							else
+								tradeType = ""+"sell";
+					
+							asset_obj.setTradeType(tradeType);
+							serverInstance.sendAsset(asset_obj);
+
+							account_obj.setAccountBalance(profileInstance.portfolioInstance.getAccountBalance());
+							serverInstance.sendAccountInfo(account_obj);
+			
+							System.out.println("trade type "+tradeType);
+
+							if(tradeType.equals("sell")){
+								simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).updateIterations();
+								if(controlRequestList.get(k).getIterations() == simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).getIterations()-1) {
+								
+									simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).updateOrdersCompleted();
+									simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).stopAlgorithm();
+									simulatorInstance.addToFeebackQueue(new Feedback_S2C("Your "+scenarioInstance.productList.get(al).getTickerSymbol()+ " order has been filled.", scenarioInstance.productList.get(al).ProductID, 1));
+									
+								}
+							}
+						}//checkRecentOderExec
+
+						AlgorithmUpdate_S2C algorithms_obj = new AlgorithmUpdate_S2C();
+						
+						algorithms_obj.setTickerSymbol(scenarioInstance.productList.get(al).getTickerSymbol());
+						
+						if((simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).getIterations())-1 >= controlRequestList.get(k).getIterations()){
+							algorithms_obj.setCurrentIteration((simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).getIterations())-1);
+							controlRequestList.remove(k);
+						} else if(simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).getCurrentAlgorithmState().getStateID()== 3){
+							algorithms_obj.setCurrentIteration(simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).getIterations()-1 );
+						} else {
+							algorithms_obj.setCurrentIteration(simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).getIterations());
+						}
+						
+						algorithms_obj.setCurrentState(simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).getCurrentAlgorithmState().getDescription());
+						algorithms_obj.setAlgoType(simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).getDescription());
+						algorithms_obj.setOrdersCompleted(simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).ordersCompleted+"/"+simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).totalOrders);
+						if(simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).getGainOrLoss() != -1){        //-1 indicates no need to update table
+							algorithms_obj.setProfitOrLossValue(simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).getGainOrLoss());
+						} else {
+							algorithms_obj.setProfitOrLossValue(-1);
+						}
+						//algorithms_obj.setTotalAmountPurchased(simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).getTotalAmtPurchased());
+						//algorithms_obj.setTotalAmountSold(simulatorInstance.getAlgorithm(scenarioInstance.productList.get(al).ProductID).getTotalAmtSold());
+				
+						serverInstance.sendAutomatedAssetInfo(algorithms_obj);
+						
+					}
+				}//k loop
+			
+		}//al loop
+
+		
+	}// updateAlgorithms
+	
+	public void reevaluateAssetsUponMarketUpdate(){
+		profileInstance.portfolioInstance.reevaluateAssetsAfterTimestep();
+		
+	} //reevaluateAssetsUponMarketUpdate
+	
+/*	public void updatePortfolio_old(){
+	
+		// update all portfolio information here
+		
+		AssetUpdate_S2C asset_obj = new AssetUpdate_S2C();
+		
+		if(serverInstance.manualRequestBuffer.isUpdatePresent == 1){
+			//serverInstance.manualRequestBuffer.updateModel();
+			
+			updateModelUponManualTrade(serverInstance.manualRequestBuffer);
+			
+			
+			AccountUpdate_S2C account_obj = new AccountUpdate_S2C();
+			
+			for(int k = 0; k < profileInstance.portfolioInstance.assetList.size(); ++k){
+				if(profileInstance.portfolioInstance.assetList.get(k).getProductID() == serverInstance.manualRequestBuffer.getProductID()){
+					System.out.println("k= "+k);
+					asset_obj.setProductID(profileInstance.portfolioInstance.assetList.get(k).getProductID());
+					asset_obj.setTickerSymbol(profileInstance.portfolioInstance.assetList.get(k).getTickerSymbol());
+					asset_obj.setAssetCurrVal(profileInstance.portfolioInstance.assetList.get(k).getAssetCurrentValue());
+					asset_obj.setQuantityHeld(profileInstance.portfolioInstance.assetList.get(k).getQuantityHeld());
+				}
+			}// k loop
+			
+			asset_obj.setTradeType(serverInstance.manualRequestBuffer.getManualTradeType());
+			serverInstance.sendAsset(asset_obj);
+
+			account_obj.setAccountBalance(profileInstance.portfolioInstance.getAccountBalance());
+			serverInstance.sendAccountInfo(account_obj);
+		} 
+	
+		serverInstance.sendAssetList(profileInstance.portfolioInstance.assetList);
+			
+	}// updatePortfolio_old
+	
+	*/
+	public void updatePortfolio(){
+		
+		// update all portfolio information here
+		
+	 while(!serverInstance.isManualRequestBufferEmpty()){	
+		
+		ManualTradeRequest_C2S mtr = new ManualTradeRequest_C2S();
+		mtr = serverInstance.popManualTradeRequest();
+			
+		AssetUpdate_S2C asset_obj = new AssetUpdate_S2C();
+		
+			updateModelUponManualTrade(mtr);
+			
+			AccountUpdate_S2C account_obj = new AccountUpdate_S2C();
+			
+			for(int k = 0; k < profileInstance.portfolioInstance.assetList.size(); ++k){
+				if(profileInstance.portfolioInstance.assetList.get(k).getProductID() == mtr.getProductID()){
+					System.out.println("k= "+k);
+					asset_obj.setProductID(profileInstance.portfolioInstance.assetList.get(k).getProductID());
+					asset_obj.setTickerSymbol(profileInstance.portfolioInstance.assetList.get(k).getTickerSymbol());
+					asset_obj.setAssetCurrVal(profileInstance.portfolioInstance.assetList.get(k).getAssetCurrentValue());
+					asset_obj.setQuantityHeld(profileInstance.portfolioInstance.assetList.get(k).getQuantityHeld());
+					simulatorInstance.addToFeebackQueue(new Feedback_S2C("Your "+ profileInstance.portfolioInstance.assetList.get(k).getTickerSymbol()+" order has been filled." , profileInstance.portfolioInstance.assetList.get(k).getProductID(), 0));
+				}
+			}// k loop
+			
+			asset_obj.setTradeType(mtr.getManualTradeType());
+			serverInstance.sendAsset(asset_obj);
+
+			account_obj.setAccountBalance(profileInstance.portfolioInstance.getAccountBalance());
+			serverInstance.sendAccountInfo(account_obj);
+			
+	
+				
+	  }//while
+			
+	 serverInstance.sendAssetList(profileInstance.portfolioInstance.assetList);
+	}// updatePortfolio
+
+	
+	
+	public void updateModelUponManualTrade(ManualTradeRequest_C2S manualTradeReq){
+		
+		// Ideally this function should be called in the StateUpdateControl function
+		
+		int productID = (int)manualTradeReq.ProductID;
+		
+		boolean isBuy = true;
+		String buy = ""+"buy";
+		int quantityChange = 0;
+		
+		if(manualTradeReq.getManualTradeType().equals(buy)){
+			isBuy = true;
+			quantityChange = manualTradeReq.getQuantity();
+			
+		} else 	{
+			isBuy = false;
+			quantityChange = manualTradeReq.getQuantity();
+		}
+		
+		if(manualTradeReq.getRequestedPrice() < scenarioInstance.getCurrentClosePrice(productID)){
+			simulatorInstance.addToFeebackQueue(new Feedback_S2C("Requested price lower than current price. Specified order at current price", productID, 0));
+		}
+
+		if(isBuy)
+		profileInstance.portfolioInstance.buy(productID, quantityChange);
+		else
+		profileInstance.portfolioInstance.sell(productID, quantityChange);
+		
+		
+	} // updateModelUponManualTrade()
+	
+	
+	
+	public void updatePerformance(){
+		
+		// update performance related variables
+	
+	}
+	
+	public void communicateAllFeedback(){
+		
+		/*for(int k = 0; k < 4; k++){
+			
+			Feedback_S2C f = new Feedback_S2C();
+			f.productID = k;
+			f.setAlgorithmOrManual(0);
+			f.setFeedbackText(""+"ProductID:"+k);
+			simulatorInstance.addToFeebackQueue(f);
+			
+		}// k loop
+		*/
+		
+		for(int j = 0; j< simulatorInstance.getFeedbackQueueSize(); j++){
+			
+			serverInstance.sendFeedback(simulatorInstance.popFromFeedbackQueue());
+			
+		}// j loop
+		
+	}// generateFeedback()
+	
+	
+	public void saveData(){
+	
+		// Apply experimental data saving mechanism (from client)
+	
+	}
+	
+	
+	public void updateTimeVars(){
+		
+		// time related variables are updated here
+		
+		this.simulatorInstance.updateCurrentTimeStep();
+		
+		//System.out.println("Product 0 Qty: "+profileInstance.portfolioInstance.getAssetQuantityHeld(0));
+		//System.out.println("Product 1 Qty: "+profileInstance.portfolioInstance.getAssetQuantityHeld(1));
+		//serverInstance.sendTestString("New Product 0 Qty: "+profileInstance.portfolioInstance.getAssetQuantityHeld(0));
+		//serverInstance.sendTestString("New Product 1 Qty: "+profileInstance.portfolioInstance.getAssetQuantityHeld(1));
+		
+		serverInstance.sendTestString("Updated to "+this.simulatorInstance.getCurrentTimeStep());
+	
+	}
+	
+	
+
+}// StateUpdateControl

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title> 
+		Financial Trading Simulator
+	</title>
+	
+	<!-- Meta tags describing webpage, identifying keywords, listing author, and defining charset-->
+	<meta name = "description" content="Portfolio Building - Specifying stock, quantity, and price"> 
+	<meta name = "keywords" content = "Portfolio, Stock, Price, Quantity">
+	<meta name = "author" content = "Siddhanth Unnithan">
+	<!-- Import bootstrap meta characteristics to allow webpage to be responsive on mobile/tablet platforms-->
+	<meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+	<meta charset = "UTF-8">
+
+	<!-- Import hosted jQuery library-->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<!-- Import local bootstrap library-->
+	<script src = "js/bootstrap.js"></script>
+	<!-- Use local script - Stock_Specifications.js-->
+	<script src = "js/Stock_Specifications.js"></script>
+	<!-- Use local script - bootstrap-select.js-->
+	<script src = "js/bootstrap-select.js"></script>
+	<!-- Import local Chart.min.js library-->
+	<script src = "js/Chart.min.js"></script>
+    <!--Use local canvasgraph.js script-->
+    <script type="text/javascript" src = "js/canvasgraph.js"></script>
+	<!--Use local canvasjs.min.js script-->
+	<script type="text/javascript" src="js/canvasjs.min.js"></script>
+
+	<!-- Import bootstrap stylesheet-->
+	<link rel = "stylesheet" href = "css/bootstrap.min.css">
+	<!-- Import local stylesheet - simulator_app.css-->
+	<link rel = "stylesheet" type = "text/css" href = "css/simulator_app.css">
+	<!-- Import Bootstrap select stylesheet-->
+	<link rel = "stylesheet" type="text/css" href="css/bootstrap-select.css">
+</head>
+
+<body>
+	<!-- Building navigation bar using bootstrap classes-->
+	<div class = "navbar navbar-inverse navbar-static-top">
+		<div class = "container">
+			<div class = "navbar-brand">Financial Trading Simulator</div>
+		</div>
+	</div>
+
+		<!--Generate first row-->
+		<div class ="row">
+			<!--Generate first column-->
+			<div class = "col-lg-6">
+				<!--Portfolio Panel Header-->
+				<div id = "portfoliopanel" class = "btn-lg btn-block" style="background-color:darkgrey">Portfolio Summary
+				</div>
+				<!--Generate nested row and column-->
+				<div class = "row">
+					<!--Portfolio Panel Body Column 1-->
+					<div class = "col-lg-6">
+						<!--Portfolio Breakdown Header-->
+						<div id = "portfolioheader" class = "btn btn-default btn-lg btn-block disabled">Breakdown
+						</div>
+						<!--Portfolio Breakdown Body-->
+						<div id = "portfoliobody" class = "img-rounded" style="height:320px">
+
+						</div>
+					</div>
+					<!--Portfolio Panel Body Column 2-->
+					<div class = "col-lg-6">
+						<!--Pie Chart Header-->
+						<div id = "portfoliochartheader" class = "btn btn-default btn-lg btn-block disabled">Portfolio Chart
+						</div>
+						<!--Pie Chart Body-->
+						<div id="portfoliobody" class="img-rounded" style="height:320px">
+							<!--Generate canvas to display pie chart-->
+							<canvas id = "portfolioChart" width = "335" height = "300px"style="margin-top:10px;margin-right:90px">
+							</canvas>
+							<script src = "js/piechart.js"></script>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Generate second column-->
+			<div class = "col-lg-4">
+				<!--Chart Panel Header-->
+				<div id = "chartpanel" class = "btn-lg btn-block disabled pull-right" style="background-color:darkgrey">Stock Price Chart 
+				</div>
+					<!-- Create chart to display stock price charts-->
+					<div id="chartContainer" class = "pull-right" style="height: 375px; width: 600px;">
+					</div>
+			</div>
+			<div class = "col-lg-2">
+				<!-- Events Column-->
+				<div id="eventcontainer" class="btn-block disabled pull-right">
+					<div id="eventspanel" class="btn-lg pull-right btn-block">Events Panel
+					</div>
+					<div id="listcontainer" class = "pull-right btn-lg btn-block">
+					<ol id="eventlist" >
+					</ol>
+					</div>
+				</div>	
+			</div>
+		</div>
+		
+		<!--Generate second row-->
+		<div class = "row">
+			<!--Generate first column-->
+			<div class = "col-lg-6">
+				<!--Decision Panel Header-->
+				<div id = "decisionpanel" class = "btn-lg btn-block disabled" style = "background-color:darkgrey">Decision Panel 
+				</div>
+
+				<!--Generate nested row-->
+				<div class = "row">
+
+					<!--Generate first nested column-->
+					<div class = "col-lg-6">
+						<!--Algorithm Panel Header-->
+						<div id = "algorithmpanel" class = "btn btn-default btn-lg btn-block disabled">Algorithm Panel 
+						</div>
+						<!--Algorithm Panel Body-->
+						<div id = "algorithmspecpanel" class = "img-rounded">	
+						<h3>Algorithms</h3> 
+						<p>Select an Algorithm: 
+							<!-- Select algorithm to be used -->
+							<select id = "algorithmlist" class = "selectpicker show-tick selectWidth" autofocus data-live-search="true">
+								<option value = "null">Choose an Algorithm</option>
+								<option value = "Smart Routing Plan">Smart Routing Plan</option>
+								<option value = "BBB">BBB</option>
+								<option value = "Total Weighted Average Price">TWAP</option>
+								<option value = "Allocation Tree">Allocation Tree</option>
+								<option value = "Miscellaneous Algorithm">Miscellaneous Algorithm
+								</option>
+							</select>
+						</p>
+						<button id = "submitAlgo" class = "btn btn-primary">Submit Algorithm
+						</button>
+						<br>
+						<button id = "startAlgo" class = "start-stop btn btn-success btn-lg pull-center" data-toggle="tooltip" data-placement="bottom" title="Start the algorithm">Start</button>
+						<button id = "stopAlgo" class = "start-stop btn btn-danger btn-lg" data-toggle="tooltip" data-placement="bottom" title="Stop the algorithm currently running">Stop</button>
+						</div>
+					</div>
+
+					<!--Generate second nested column-->
+					<div class = "col-lg-6">
+						<!--Order Panel Header-->
+						<div id = "orderpanel" class = "btn btn-default btn-lg btn-block disabled" style="width:480px">Order Panel 
+						</div>
+						<!--Order Panel Body-->
+						<div id = "stockpurchasepanel" class = "img-rounded" style="width:480px; text-align:left">
+						<h3>Product Order</h3>
+						<p>Product to be purchased:
+						<!-- Select stock to be purchased --> 
+						<select id = "stocklist" class = "selectpicker show-tick selectWidth" autofocus data-size="4" data-live-search="true"> 
+								<option value = "null">Choose a Product</option>
+								<option value = "MSFT">MSFT</option>
+								<option value = "AAPL">AAPL</option>
+								<option value = "RY">RY</option>
+								<option value = "LMT">LMT</option>
+								<option value = "YM">YM</option>
+								<option value = "GM">GM</option> 
+								<option value = "ES">ES</option>
+							</select>
+						</p>
+						<!-- Input form to specify product quantity to be purchased --> <!-- Unused input form: <input type="text" id="quantity">-->
+						<p>Quantity to be purchased: 
+							<output id ="rangevalue" style="display:inline"></output> <!-- Output slider value -->
+							<!-- Range slider from 100 stocks to 1000 stocks -->
+							<input type = "range" id = "quantity" min = "100" max = "1000" onchange="rangevalue.value=value" step = "50"></input>
+						</p>
+						<!-- Input form to specify price at which product is purchased --> 
+						<p> Price at which desired quantity is to be purchased: 
+							<input type = "text" id = "price">
+						</p>
+						<!-- Select order type-->
+						<p> Order type:
+							<select id = "ordertype" class = "selectWidth selectpicker show-tick">
+								<option value = "null">Choose an order type</option>
+								<option value = "Limit">Limit</option>
+								<option value = "Market">Market</option>
+								<option value = "Pegged">Pegged</option>
+							</select>
+						</p>
+						<!-- Button used to submit order specifications-->
+						<button type = "button" id = "stockdisplay" class = "btn btn-primary" data-toggle="tooltip" data-placement="left" title="Place the order">Submit Order Specifications</button> 
+						<!-- Display purchase specifications-->
+						<h3> Order Specifications</h3>
+						<div id = "stockspecifications"></div>
+							<!-- Display product basket-->
+							<h3>Current Basket </h3> 
+								<ol id = "basket"></ol>
+							<button type = "button" id = "showbasket" class ="btn btn-default btn-sm"data-toggle="tooltip" data-placement="left" title="Toggle basket display">Hide Basket</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--Generate second column-->
+			<div class = "col-lg-5">
+				<!--Running Algorithm Panel Header-->
+				<div id = "runningalgorithms" class = "btn-lg btn-block disabled pull-right" style="background-color:darkgrey">Running Algorithms 
+				</div>
+
+			</div>
+		</div>
+
+	<div class = "navbar navbar-inverse navbar-static-bottom">
+		<div class = "container">
+			<p class = "navbar-text pull-left">Advanced Interface Design Laboratory</p> 
+			<a class = "navbar-btn btn btn-success pull-right">Submit Feedback and Analytics</a>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title> 
+		Financial Trading Simulator
+	</title>
+	
+	<!-- Meta tags describing webpage, identifying keywords, listing author, and defining charset-->
+	<meta name = "description" content="Start and stop simulator"> 
+	<meta name = "keywords" content = "simulator, start, stop, experimenter">
+	<meta name = "author" content = "Aditya Junnarkar">
+	<!-- Import bootstrap meta characteristics to allow webpage to be responsive on mobile/tablet platforms-->
+	<meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+	<meta charset = "UTF-8">
+
+	<!-- Import hosted jQuery library-->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<!-- Import local bootstrap library-->
+	<script src = "js/bootstrap.js"></script>
+	<!-- Use local script - sim_operation.js-->
+	<script src = "js/sim_operation.js"></script>
+	<!-- Import date.js library -->
+	<script type="text/javascript" src="js/date.js"></script>
+	
+	<!-- Import bootstrap stylesheet-->
+	<link rel = "stylesheet" href = "css/bootstrap.min.css">
+	<!-- Import Bootstrap select stylesheet-->
+	<link rel = "stylesheet" type="text/css" href="css/bootstrap-select.css">
+	
+	<link rel = "stylesheet" type = "text/css" href = "css/simulator_app.css">
+	</head>
+	<body>
+	<!--Generate first row-->
+	<div class ="row">
+	<!--Generate first column-->
+		<div class = "col-lg-3" style="padding-right: 0px;">
+			<div id= "timestep" class="timestep">
+			<b>TIMESTEP : <span id="timestep_val" style="color:#6633cc"></span></b>
+			</div>
+	
+		</div>
+		<div class = "col-lg-6" style="padding: 0px">
+		<div id= "title" class="title" >
+			<b>AIDL Simulator Experimenter View</b>
+			</div>
+		</div>
+	</div>
+	<!--Generate second row-->
+	<div class ="row">
+	<!--Generate first column-->
+		<div class = "col-lg-3" style="padding-right: 0px">
+		<div id="session_control">
+			<b>Session Control</b>
+			<div class="btncontainer">
+				<button id="begin_login" type="button" class="btn sim_btn ">Initiate Participant Login</button>
+				<button id="push_pre" type="button" class="btn sim_btn ">Push Preview</button>
+				<button id="start_sce" type="button" class="btn sim_btn " >Start Scenario</button>
+				<form id="experimenter_form">
+				<div id="file_db_exp_container" >
+						<div>Enter Experimenter ID</div>
+						<div  style = "padding-top: 8px; margin-bottom: 6px; text-align: center">
+      						<input name="experimenterID" type="text" class="form-control" id="experimenterID" placeholder="Experimenter ID" maxlength="15" style="width: 200px; display: inline; "/>
+    					</div>
+						<div >Select Scenario file</div>
+						<select name="scenario_file" id="scenario_xml_select" style="margin-bottom: 6px; background-color: #C299FF; color: #290066;">
+							<option  selected="selected">Select</option>
+							<option value="ScenarioTest.xml">ScenarioTest.xml</option>
+							<option value="ScenarioTestB.xml">ScenarioTestB.xml</option>
+						</select>
+						<div >Select CSV file to load Market Data</div>
+						<select name="csv_file" id="marketdata_csv_select" style="background-color:#C299FF; color: #290066;">
+							<option  selected="selected">Select</option>
+							<option value="MarketData.csv">MarketData.csv</option>
+							<option value="MarketData1.csv">MarketData1.csv</option>
+						</select>
+						<div >Select Database to save Simulator Data</div>
+						<select name="database" id="database_select" style="background-color:#C299FF; color: #290066;">
+							<option  selected="selected">Select</option>
+							<option value="test_database">Test</option>
+							<option value="online_database">Online</option>
+						</select>			
+				</div>
+				<input id="load_sce" type="submit" class="btn sim_btn " value="Load Scenario">
+				</form>
+				<!--button id="save_data" type="button" class="btn sim_btn " >Save Data</button-->
+				<button id="stop_sim" type="button" class="btn sim_btn " >Stop Simulator</button>
+			</div>
+     	</div>
+		</div>
+		<div class = "col-lg-2" style="padding: 0px;">
+		<div id="prog_container">
+			<div><b>Progress logs</b></div>
+			<ul id="prog_logs"></ul>
+		</div>
+		</div>
+		<div class = "col-lg-2" style="padding: 0px">
+			<div id="error_container">
+				<div><b>Error logs</b></div>
+				<ul id="error_logs"></ul>
+			</div>
+		</div>
+		<div class = "col-lg-2" style="padding: 0px;">
+		<div id="debug_container">
+			<div><b>Debug logs</b></div>
+			<ul id="debug_logs"></ul>
+		</div>
+		</div>
+	
+
+	</div>
+	
+	
+	
+	
+	</body>
+	
+	</html>

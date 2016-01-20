@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<scenario xmlns:ns2="testscenario.Scenario">
+<scenarioDuration>60</scenarioDuration>
+<numOfEvents>5</numOfEvents>
+<numOfProducts>4</numOfProducts>
+<numOfAutomatedProducts>2</numOfAutomatedProducts>
+<timeWindowForQuotes>30</timeWindowForQuotes>
+<initialAccountBalance>10000.00</initialAccountBalance>
+  
+<initialShareQuantities>
+	<quantity>20</quantity>
+	<quantity>30</quantity>
+	<quantity>20</quantity>
+	<quantity>30</quantity>
+</initialShareQuantities>
+
+<productList>
+	<Product>
+		<ProductID>0</ProductID>
+		<sector>Technology</sector>
+		<isAutomated>0</isAutomated> 
+		<tickerSymbol>MSFT</tickerSymbol> 
+	</Product>
+	<Product>
+		<ProductID>1</ProductID>
+		<sector>Technology</sector>
+		<isAutomated>0</isAutomated> 
+		<tickerSymbol>GOOG</tickerSymbol> 
+	</Product>
+	<Product>
+		<ProductID>3</ProductID>
+		<sector>Technology</sector>
+		<isAutomated>1</isAutomated> 
+		<tickerSymbol>AAPL</tickerSymbol> 
+	</Product>
+	<Product>
+		<ProductID>4</ProductID>
+		<sector>Technology</sector>
+		<isAutomated>1</isAutomated> 
+		<tickerSymbol>IBM</tickerSymbol> 
+	</Product>
+</productList>
+  
+<marketDataByProduct>
+	<ProductMarketData>
+		<productID>0</productID>
+		<tickerSymbol>MSFT</tickerSymbol>
+		<!-- open_price_list>
+			<open_price>6.4</open_price>
+			<open_price>4.4</open_price>
+			<open_price>6.4</open_price>
+			<open_price>4.4</open_price>
+			<open_price>7.4</open_price>
+		</open_price_list> 
+		<close_price_list>
+			<close_price>5.4</close_price>
+			<close_price>6.4</close_price>
+			<close_price>3.4</close_price>
+			<close_price>3.4</close_price>
+			<close_price>6.4</close_price>
+		</close_price_list> 
+		<high_price_list>
+			<high_price>6.7</high_price>
+			<high_price>6.7</high_price>
+			<high_price>3.7</high_price>
+			<high_price>5.7</high_price>
+			<high_price>37.7</high_price>
+		</high_price_list> 
+		<low_price_list>
+			<low_price>6.7</low_price>
+			<low_price>5.7</low_price>
+			<low_price>5.6</low_price>
+			<low_price>5.36</low_price>
+			<low_price>56.7</low_price>
+		</low_price_list-->  
+	</ProductMarketData>
+	<ProductMarketData>
+		<productID>1</productID>
+		<tickerSymbol>GOOG</tickerSymbol>
+		<!--open_price_list>
+			<open_price>6.7</open_price>
+			<open_price>75</open_price>
+			<open_price>65.6</open_price>
+			<open_price>6.5</open_price>
+		  <open_price>5.6</open_price>
+		</open_price_list> 
+		<close_price_list>
+			<close_price>45.6</close_price>
+			<close_price>5.6</close_price>
+			<close_price>6.5</close_price>
+			<close_price>5.6</close_price>
+			<close_price>5.6</close_price>
+		</close_price_list> 
+		<high_price_list>
+			<high_price>4.6</high_price>
+			<high_price>6.45</high_price>
+			<high_price>65.7</high_price>
+			<high_price>5.75</high_price>
+			<high_price>47.5</high_price>
+		</high_price_list> 
+		<low_price_list>
+			<low_price>5.6</low_price>
+			<low_price>5.65</low_price>
+			<low_price>3.745</low_price>
+			<low_price>6.77</low_price>
+			<low_price>3.773</low_price>
+		</low_price_list-->   
+	</ProductMarketData>
+	<ProductMarketData>
+		<productID>3</productID>
+		<tickerSymbol>AAPL</tickerSymbol>
+		<!--open_price_list>
+			<open_price>56.5</open_price>
+			<open_price>65.6</open_price>
+			<open_price>56.56</open_price>
+			<open_price>56.5</open_price>
+			<open_price>6.7</open_price>
+		</open_price_list> 
+		<close_price_list>
+			<close_price>76.7</close_price>
+			<close_price>75.9</close_price>
+			<close_price>75.6</close_price>
+			<close_price>7.9</close_price>
+			<close_price>75.67</close_price>
+		</close_price_list> 
+		<high_price_list>
+			<high_price>76.7</high_price>
+			<high_price>7.67</high_price>
+			<high_price>7.6</high_price>
+			<high_price>7.6</high_price>
+			<high_price>6.76</high_price>
+		</high_price_list> 
+		<low_price_list>
+			<low_price>7.5</low_price>
+			<low_price>5.67</low_price>
+			<low_price>5.67</low_price>
+			<low_price>5.7</low_price>
+			<low_price>6.7</low_price>
+		</low_price_list-->  
+	</ProductMarketData>
+	<ProductMarketData>
+		<productID>4</productID>
+		<tickerSymbol>IBM</tickerSymbol>
+		<!--open_price_list>
+			<open_price>756.6</open_price>
+			<open_price>75.6</open_price>
+			<open_price>75.9</open_price>
+			<open_price>57.7</open_price>
+			<open_price>78.7</open_price>
+		</open_price_list> 
+		<close_price_list>
+			<close_price>756.7</close_price>
+			<close_price>5.7</close_price>
+			<close_price>56.7</close_price>
+			<close_price>7.5</close_price>
+			<close_price>5.75</close_price>
+		</close_price_list> 
+		<high_price_list>
+			<high_price>7567</high_price>
+			<high_price>567</high_price>
+			<high_price>575</high_price>
+			<high_price>867</high_price>
+			<high_price>767</high_price>
+		</high_price_list> 
+		<low_price_list>
+			<low_price>7.756</low_price>
+			<low_price>7.7</low_price>
+			<low_price>6.7</low_price>
+			<low_price>8.77</low_price>
+			<low_price>7.7</low_price>
+		</low_price_list-->  
+	</ProductMarketData>
+</marketDataByProduct>
+<eventList>
+	<Event_S2C>
+		<ProductID>5</ProductID>
+		<name>A</name>
+		<description>Wells Fargo and American Express Launch Two New Credit Cards with Rich Rewards and Benefits.</description>
+		<tickerSymbol>AXP</tickerSymbol>
+		<dispatchTime>0</dispatchTime>
+	</Event_S2C>
+	<Event_S2C>
+		<ProductID>5</ProductID>
+		<name>B</name>
+		<description>American Express Serve Announces Larget Free Cash Reload Network in U.S.</description>
+		<tickerSymbol>AXP</tickerSymbol>
+		<dispatchTime>2</dispatchTime>
+		</Event_S2C>
+	<Event_S2C>
+		<ProductID>6</ProductID>
+		<name>C</name>
+		<description>Germany's Bayer plans to buy Merck &amp; Co.'s consumer care business for $14.2 billion.</description>
+		<tickerSymbol>MRK</tickerSymbol>
+		<dispatchTime>4</dispatchTime>
+	</Event_S2C>
+	<Event_S2C>
+		<ProductID>7</ProductID>
+		<name>D</name>
+		<description>Caterpillar's posts higher first-quarter profit, raises outlook.</description>
+		<tickerSymbol>CAT</tickerSymbol>
+		<dispatchTime>6</dispatchTime>
+	</Event_S2C>
+	<Event_S2C>
+		<ProductID>8</ProductID>
+		<name>E</name>
+		<description>Trulia CEO Sells $310,408 in Stock.</description>
+		<tickerSymbol>TRLA</tickerSymbol>
+		<dispatchTime>8</dispatchTime>
+	</Event_S2C>
+</eventList>
+<pauseList>
+	<Pause_S2C>
+		<intervalID>0</intervalID>
+		<dispatchTime>5</dispatchTime>
+		<duration>2</duration>
+	</Pause_S2C>
+	<Pause_S2C>
+		<intervalID>1</intervalID>
+		<dispatchTime>10</dispatchTime>
+		<duration>2</duration>
+	</Pause_S2C>
+</pauseList>
+<!--  algoBehaviourList>
+	<AlgorithmBehaviour>
+		<listOfAlgoStates>
+			<AlgorithmState>
+				<ProductID>0</ProductID>
+				<StateID>0</StateID>
+				<stateDescription>Entry: Waiting for Buy Signal</stateDescription>
+			</AlgorithmState>
+			<AlgorithmState>
+				<ProductID>0</ProductID>
+				<StateID>1</StateID>
+				<stateDescription>Entry: Sent Buy Order</stateDescription>
+				</AlgorithmState>
+			<AlgorithmState>
+				<ProductID>0</ProductID>
+				<StateID>2</StateID>
+				<stateDescription>Exit: Waiting for Sell Signal</stateDescription>
+				</AlgorithmState>
+			<AlgorithmState>
+				<ProductID>0</ProductID>
+				<StateID>3</StateID>
+				<stateDescription>Exit: Sent Sell Order</stateDescription>
+			</AlgorithmState>
+		</listOfAlgoStates>
+	</AlgorithmBehaviour>
+	<AlgorithmBehaviour>
+		<listOfAlgoStates>
+			<AlgorithmState>
+				<ProductID>1</ProductID>
+				<StateID>0</StateID>
+				<stateDescription>Entry: Waiting for Buy Signal</stateDescription>
+			</AlgorithmState>
+			<AlgorithmState>
+				<ProductID>1</ProductID>
+				<StateID>1</StateID>
+				<stateDescription>Entry: Sent Buy Order</stateDescription>
+				</AlgorithmState>
+			<AlgorithmState>
+				<ProductID>1</ProductID>
+				<StateID>2</StateID>
+				<stateDescription>Exit: Waiting for Sell Signal</stateDescription>
+				</AlgorithmState>
+			<AlgorithmState>
+				<ProductID>1</ProductID>
+				<StateID>3</StateID>
+				<stateDescription>Exit: Sent Sell Order</stateDescription>
+			</AlgorithmState>
+		</listOfAlgoStates>
+	</AlgorithmBehaviour>
+	<AlgorithmBehaviour>
+		<listOfAlgoStates>
+			<AlgorithmState>
+				<ProductID>3</ProductID>
+				<StateID>0</StateID>
+				<stateDescription>Entry: Waiting for Buy Signal</stateDescription>
+			</AlgorithmState>
+			<AlgorithmState>
+				<ProductID>3</ProductID>
+				<StateID>1</StateID>
+				<stateDescription>Entry: Sent Buy Order</stateDescription>
+				</AlgorithmState>
+			<AlgorithmState>
+				<ProductID>3</ProductID>
+				<StateID>2</StateID>
+				<stateDescription>Exit: Waiting for Sell Signal</stateDescription>
+				</AlgorithmState>
+			<AlgorithmState>
+				<ProductID>3</ProductID>
+				<StateID>3</StateID>
+				<stateDescription>Exit: Sent Sell Order</stateDescription>
+			</AlgorithmState>
+		</listOfAlgoStates>
+	</AlgorithmBehaviour>
+	<AlgorithmBehaviour>
+		<listOfAlgoStates>
+			<AlgorithmState>
+				<ProductID>4</ProductID>
+				<StateID>0</StateID>
+				<stateDescription>Entry: Waiting for Buy Signal</stateDescription>
+			</AlgorithmState>
+			<AlgorithmState>
+				<ProductID>4</ProductID>;
+				<StateID>1</StateID>
+				<stateDescription>Entry: Sent Buy Order</stateDescription>
+				</AlgorithmState>
+			<AlgorithmState>
+				<ProductID>4</ProductID>
+				<StateID>2</StateID>
+				<stateDescription>Exit: Waiting for Sell Signal</stateDescription>
+				</AlgorithmState>
+			<AlgorithmState>
+				<ProductID>4</ProductID>
+				<StateID>3</StateID>
+				<stateDescription>Exit: Sent Sell Order</stateDescription>
+			</AlgorithmState>
+		</listOfAlgoStates>
+	</AlgorithmBehaviour>
+</algoBehaviourList-->
+
+	
+</scenario>
