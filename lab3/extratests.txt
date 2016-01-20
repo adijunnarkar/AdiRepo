@@ -1,0 +1,4 @@
+Tested:
+1) Random values insertion/deletion	[Pass]
+2) Root deletion (0,1,2 children)	[Pass]
+3) Depth test				[Pass]
